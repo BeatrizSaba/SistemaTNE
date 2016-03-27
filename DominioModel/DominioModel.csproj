@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Endereco.cs" />
     <Compile Include="Entidades\EstadoCliente.cs" />
