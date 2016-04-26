@@ -12,11 +12,12 @@
     <meta name="author" content="">
     <title>@ViewBag.Title</title>
     <!-- Bootstrap Core CSS -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    @* <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="~/Content/CSS/sb-admin.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet" type="text/css">
+    *@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,11 +27,22 @@
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+    
+    @*
     <!-- jQuery -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="~/Scripts/bootstrap.min.js"></script>
+    *@
 
+    <!-- RENDER SECTION -->
+    @Styles.Render("~/Content/css");
+    @Styles.Render("~/bundles/estilos_dependentes");
+
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/scripts_dependentes");
 
     @if (IsSectionDefined("PartialSection"))
     {
@@ -104,15 +116,15 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Usuários <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="~/Administrador/NovoUsuario">Novo</a>
+                                <a id="NovoUsuario">Novo</a>
                             </li>
                             <li>
-                                <a href="~/Administrador/Index">Visualizar</a>
+                                <a id="ListaUsuarios">Visualizar</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="~/Administrador/ImportarDados"><i class="fa fa-fw fa-file"></i> Importar Dados</a>
+                        <a id="ImportarDados"><i class="fa fa-fw fa-file"></i> Importar Dados</a>
                     </li>
 
                 </ul>

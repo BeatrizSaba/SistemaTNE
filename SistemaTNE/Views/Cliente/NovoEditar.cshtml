@@ -1,0 +1,137 @@
+﻿<div class="container" style="width: 100%;">
+    <h2>Novo Cliente</h2>
+    <hr />
+    <ul class="nav nav-pills barraAcoes">
+        <li class="active"><a data-toggle="pill" href="#home">Dados Pessoais</a></li>
+        <li><a data-toggle="pill" href="#menu1">Endereço</a></li>
+        <li><a data-toggle="pill" href="#menu2">Outros</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="home" class="tab-pane fade in active">
+            <fieldset class="form-group">
+                <label for="Nome">Nome completo</label>
+                <input type="email" class="form-control" id="Nome" placeholder="Informe o nome completo">
+                <!--<small class="text-muted">We'll never share your email with anyone else.</small>-->
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="DataNascimento">Data de nascimento</label>
+                <input type="text" class="form-control" id="DataNascimento" placeholder="Use o formato dd/mm/aaaa">
+            </fieldset>
+            <fieldset class="form-group">
+                <label class="display_block"> Tipo </label>
+                <select class="select2-single form-control">
+                    <option>Selecionar...</option>
+                    <option>Pessoa Física </option>
+                    <option>Pessoa Jurídica</option>
+
+                </select>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="RamoAtividade">Ramo de Atividade</label>
+                <input type="text" class="form-control" id="RamoAtividade" placeholder="">
+                <small class="text-muted">Exibir  Opções e permitir inserir outros.</small>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="display_block"> Situação atual </label>
+                <select class="select2-single form-control">
+                    <option>Selecionar...</option>
+                    <option> Ativo </option>
+                    <option> Potencial</option>
+                    <option> Ex-cliente </option>
+
+                </select>
+            </fieldset>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <fieldset class="form-group">
+                <label for="Logradouro">Logradouro</label>
+                <input type="text" class="form-control" id="Logradouro" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="Numero">Número</label>
+                <input type="text" class="form-control" id="Numero" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="Complemento">Complemento</label>
+                <input type="text" class="form-control" id="Complemento" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="Bairro">Bairro</label>
+                <input type="text" class="form-control" id="Bairro" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="Cidade">Cidade</label>
+                <input type="text" class="form-control" id="Cidade" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="UF">Estado</label>
+                <input type="text" class="form-control" id="UF" placeholder="">
+            </fieldset>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <fieldset class="form-group">
+                <label for="ModeloVeiculo">Modelo do veículo</label>
+                <input type="text" class="form-control" id="ModeloVeiculo" placeholder="">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="Placa">Placa</label>
+                <input type="text" class="form-control" id="Placa" placeholder="XXX-0000">
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="display_block"> Serviços </label>
+                <select class="select2-mult form-control" multiple="multiple" style="width:100%">
+                    <option>Lavagem</option>
+                    <option>Troca de Óleo</option>
+                    <option>Calibragem</option>
+
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="display_block"> Postos da rede em que abastece </label>
+                <select class="select2-mult form-control" multiple="multiple" style="width:100%">
+                    <option>Posto Belo Vale</option>
+                    <option>Posto Pérola</option>
+                    <option>Posto Século XXI</option>
+
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="display_block"> Forma de Pagamento </label>
+                <select class="select2-single form-control" multiple="multiple" style="width:100%">
+                    <option>Dinheiro</option>
+                    <option>Cheque</option>
+                    <option>Cartão</option>
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="display_block"> Frequência que vem ao posto  </label>
+                <select class="select2-single form-control" style="width:100%">
+                    <option>Selecionar...</option>
+                    <option>Diáriamente</option>
+                    <option>Semanalmente</option>
+                    <option>Quinzenalmente</option>
+                    <option>Mensalmente</option>
+                </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="DataNascimento">Preferência de Marca</label>
+                <input type="text" class="form-control" id="DataNascimento" placeholder="marca/ combustível/ lubrificante">
+                <small class="text-muted">Exibir  Opções e permitir inserir outros.</small>
+            </fieldset>
+
+        </div>
+
+    </div>
+
+    <form>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>

@@ -169,8 +169,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\FerramentasController.cs" />
     <Compile Include="Controllers\GestorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OLAPController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,8 +198,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CSS\bootstrap-select.css" />
+    <Content Include="Content\CSS\bootstrap-table.css" />
+    <Content Include="Content\CSS\bootstrap-table.min.css" />
+    <Content Include="Content\CSS\bootstrap.css" />
+    <Content Include="Content\CSS\bootstrap.min.css" />
+    <Content Include="Content\CSS\dataTables.bootstrap.min.css" />
     <Content Include="Content\CSS\font-awesome.min.css" />
+    <Content Include="Content\CSS\geral.css" />
     <Content Include="Content\CSS\sb-admin.css" />
+    <Content Include="Content\CSS\select2.css" />
+    <Content Include="Content\CSS\select2.min.css" />
+    <Content Include="Content\CSS\waitMe.css" />
+    <Content Include="Content\CSS\waitMe.min.css" />
     <Content Include="Content\Images\1%402x.jpg" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\2%402x.jpg" />
@@ -279,7 +293,14 @@
     <Content Include="Content\bootstrap\bootstrap-reboot.scss" />
     <Content Include="Content\bootstrap\bootstrap-grid.scss" />
     <Content Include="Content\bootstrap\bootstrap-flex.scss" />
+    <Content Include="Scripts\App\clientes.js" />
+    <Content Include="Scripts\App\constantes.js" />
+    <Content Include="Scripts\App\geral.js" />
+    <Content Include="Scripts\App\sistema.js" />
+    <Content Include="Scripts\App\usuarios.js" />
     <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
@@ -287,12 +308,10 @@
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
-    <Content Include="Scripts\demo.js" />
-    <Content Include="Scripts\dynamic.js" />
-    <Content Include="Scripts\ga.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.12.0.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -302,6 +321,10 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\waitMe.js" />
+    <Content Include="Scripts\waitMe.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -311,7 +334,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Autenticacao.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -334,6 +357,14 @@
     <Content Include="Views\Shared\DropTable.cshtml" />
     <Content Include="Views\Gestor\BuscaAvancada.cshtml" />
     <Content Include="Views\Gestor\Relatorio.cshtml" />
+    <Content Include="Views\Usuario\Novo.cshtml" />
+    <Content Include="Views\Usuario\Lista.cshtml" />
+    <Content Include="Views\Ferramentas\ImportarDados.cshtml" />
+    <Content Include="Views\Cliente\NovoEditar.cshtml" />
+    <Content Include="Views\Cliente\Lista.cshtml" />
+    <Content Include="Views\Cliente\Relatorio.cshtml" />
+    <Content Include="Views\OLAP\Consulta.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

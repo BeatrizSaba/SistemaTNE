@@ -1,0 +1,26 @@
+﻿/*  ------------- SELECT2 ------------------------*/
+.select2-container {
+    width: 100%;
+}
+
+/* -------------- Clientes --------------------- */
+
+#tblClientes th {
+    white-space: nowrap;
+}
+
+#tblClientes td {
+    white-space: nowrap;
+}
+
+#tblClientes .col-sm-12 {
+    overflow-x: scroll;
+}
+
+#tblClientes .row {
+    width: 100%;
+}
+
+.barraAcoes {
+    margin-bottom: 20px;
+}

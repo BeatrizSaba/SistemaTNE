@@ -1,0 +1,1 @@
+﻿var PARTIAL_VIEW_CONTAINER = 'page-wrapper';

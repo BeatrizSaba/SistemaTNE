@@ -29,7 +29,7 @@ jQuery(document).ready(function() {
     		    $(this).removeClass('input-error');
 
 
-
+                /*
     		    //PROTOTIPO CODE ---- -------------------------------------
     		    e.preventDefault();
     		    var user = $('input[type = "text"]').val();
@@ -41,7 +41,7 @@ jQuery(document).ready(function() {
     		    else
     		        $(this).addClass('input-error');
     		    //----------------------------------------------------------
-
+                */
     		}
     	});      
 

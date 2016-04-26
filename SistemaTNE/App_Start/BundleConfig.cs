@@ -24,8 +24,33 @@ namespace SistemaTNE
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.css"
+                      //,"~/Content/site.css"
+                      ));
+
+
+
+            bundles.Add(new StyleBundle("~/bundles/estilos_dependentes").Include(
+                "~/Content/CSS/bootstrap-table.css",
+                "~/Content/CSS/waitMe.css",
+                "~/Content/CSS/sb-admin.css",
+                "~/Content/CSS/font-awesome.min.css",
+                "~/Content/CSS/bootstrap-select.css",
+                "~/Content/CSS/geral.css",
+                "~/Content/CSS/select2.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/scripts_dependentes").Include(
+                "~/Scripts/bootstrap-table.js",
+                "~/Scripts/waitMe.js",
+                "~/Scripts/App/constantes.js",
+                "~/Scripts/App/geral.js",
+                "~/Scripts/App/usuarios.js",
+                "~/Scripts/App/clientes.js",
+                "~/Scripts/App/sistema.js",
+                "~/Scripts/bootstrap-select.js",
+                "~/Scripts/select2.js",                      
+                "~/Scripts/chart.min.js"));
         }
     }
 }

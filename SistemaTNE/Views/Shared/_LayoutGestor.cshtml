@@ -18,11 +18,12 @@
     }
 
     <!-- Bootstrap Core CSS -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="~/Content/CSS/sb-admin.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet" type="text/css">
+    @* <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="~/Content/CSS/sb-admin.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet" type="text/css">
+    *@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,11 +33,21 @@
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
-    <!-- jQuery -->
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*
+        <!-- jQuery -->
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    *@
 
+    <!-- RENDER SECTION -->
+    @Styles.Render("~/Content/css");
+    @Styles.Render("~/bundles/estilos_dependentes");
+
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/scripts_dependentes");
 
     @if (IsSectionDefined("PartialSection"))
     {
@@ -110,10 +121,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Clientes <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="~/Gestor/Novo">Novo</a>
+                                <a id="NovoCliente">Novo</a>
                             </li>
                             <li>
-                                <a href="~/Gestor/Visualizar">Visualizar</a>
+                                <a id="ListaClientes">Visualizar</a>
                             </li>
                         </ul>
                     </li>
@@ -122,10 +133,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-arrows-v"></i> SAD <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
-                                <a href="~/Gestor/BuscaAvancada">Análise de Dados</a>
+                                <a id="ConsultaOlap">Análise de Dados</a>
                             </li>
                             <li>
-                                <a href="~/Gestor/Relatorio">Análise Salva</a>
+                                <a id="ConsulasOlapSalvas">Análise Salva</a>
                             </li>
                         </ul>
                     </li>
