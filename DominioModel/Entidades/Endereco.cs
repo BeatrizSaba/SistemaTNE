@@ -1,19 +1,40 @@
-﻿namespace DominioModel.Entidades
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace DominioModel.Entidades
 {
-    public class Endereco
+
+    public partial class Endereco
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Endereco()
+        {
+            Clientes = new HashSet<Cliente>();
+        }
+
         public int EnderecoID { get; set; }
 
+        [Required]
+        [StringLength(8)]
+        public string CEP { get; set; }
+
+        [Required]
+        [StringLength(60)]
         public string Logradouro { get; set; }
 
-        public int Numero { get; set; }
+        public int BairroID { get; set; }
 
-        public string Complemento { get; set; }
+        public int CidadeID { get; set; }
 
-        public string Bairro { get; set; }
+        public int UFID { get; set; }
 
-        public string Cidade { get; set; }
+        public virtual Bairro Bairros { get; set; }
 
-        public string Estado { get; set; }
+        public virtual Cidade Cidades { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
+
+        public virtual UF UFs { get; set; }
     }
 }

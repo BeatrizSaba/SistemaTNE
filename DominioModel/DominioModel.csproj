@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,21 +49,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\Bairro.cs" />
+    <Compile Include="Entidades\Cidade.cs" />
     <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\Contato.cs" />
     <Compile Include="Entidades\Endereco.cs" />
     <Compile Include="Entidades\EstadoCliente.cs" />
     <Compile Include="Entidades\FormasPagamento.cs" />
     <Compile Include="Entidades\FrequenciaCompra.cs" />
     <Compile Include="Entidades\Marca.cs" />
+    <Compile Include="Entidades\MudancaEstadoCliente.cs" />
+    <Compile Include="Entidades\PapelUsuario.cs" />
     <Compile Include="Entidades\Posto.cs" />
     <Compile Include="Entidades\RamoAtividade.cs" />
     <Compile Include="Entidades\Servico.cs" />
     <Compile Include="Entidades\TipoPessoa.cs" />
+    <Compile Include="Entidades\UF.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Veiculo.cs" />
+    <Compile Include="Migrations\201604290229485_Inicial.cs" />
+    <Compile Include="Migrations\201604290229485_Inicial.Designer.cs">
+      <DependentUpon>201604290229485_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorio\SADContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositorio\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604290229485_Inicial.resx">
+      <DependentUpon>201604290229485_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

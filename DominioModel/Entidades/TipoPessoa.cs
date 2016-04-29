@@ -2,7 +2,7 @@
 {
     public enum TipoPessoa
     {
-        Fisica,
-        Juridica
+        Fisica = 1,
+        Juridica = 2
     }
 }

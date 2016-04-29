@@ -2,8 +2,8 @@
 {
     public enum EstadoCliente
     {
-        Potencial,
-        Ativo,
-        ExCliente
+        Potencial = 1,
+        Ativo = 2,
+        ExCliente = 3
     }
 }

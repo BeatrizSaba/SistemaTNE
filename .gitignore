@@ -48,3 +48,8 @@ Temporary Items
 /DominioModel/obj/Debug
 /DominioUnitTest/obj/Debug
 /WebUICodedTest/obj/Debug
+/DominioModel/packages.config
+/DominioModel/bin/Debug
+/DominioUnitTest/bin/Debug
+/WebUICodedTest/bin/Debug/WebUICodedTest.dll
+/WebUICodedTest/bin/Debug/WebUICodedTest.pdb
