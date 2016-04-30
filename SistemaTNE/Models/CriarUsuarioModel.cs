@@ -24,10 +24,12 @@ namespace SistemaTNE.Models
         [DataType(DataType.Password)]
         public string Senha { get; set; }
 
+        [Display(Name = "Confirmar senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [DataType(DataType.Password)]
         public string ConfirmarSenha { get; set; }
 
+        [Display(Name = "Tipo")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public PapelUsuario Papel { get; set;}
     }

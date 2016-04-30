@@ -61,3 +61,52 @@ function VaParaAutenticacaoSeSignOut(html)
 
     return false;
 }
+
+/*
+ <input class="input-validation-error" name="Senha" type="text" value="">
+ <span class="text-danger field-validation-error" data-valmsg-for="Senha" data-valmsg-replace="true">
+    <span for="Senha" class="">O campo Senha é obrigatório.</span>
+  </span>
+
+*/
+
+function HabilitarValidacao(campoId, erroMsg) {
+
+    $('span[data-valmsg-for="' + campoId + '"]').append(
+       '<span for="' + campoId + '" class="">' + erroMsg + '</span><br/>'
+    );
+}
+
+function DesabilitarValidacao(campoId) {
+    $("span[data-valmsg-for='" + campoId + "']").html("");
+}
+
+function DesabilitarTodasValidacoes() {
+    $("span[data-valmsg-for]").html("");
+}
+
+function AlertaSucesso(msg)
+{
+    BootstrapDialog.alert({
+        title: 'Sucesso',
+        message: msg,
+        type: BootstrapDialog.TYPE_SUCCESS, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+        closable: true, // <-- Default value is false
+        draggable: true // <-- Default value is false
+    });
+}
+
+
+function AlertaErroInterno(msg) {
+
+    if ((msg === null) || (msg === undefined))
+        msg = 'Desculpe. Ocorreu um erro inesperado. Favor entrar em contato com o suporte.';
+
+    BootstrapDialog.alert({
+        title: 'Erro',
+        message: msg,
+        type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+        closable: true, // <-- Default value is false
+        draggable: true // <-- Default value is false
+    });
+}

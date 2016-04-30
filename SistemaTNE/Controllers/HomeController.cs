@@ -24,7 +24,8 @@ namespace SistemaTNE.Controllers
 
             if (user != null)
             {
-                ViewBag.Usuario = user.Papel;
+                ViewBag.NomeUsuario = user.Nome;
+                ViewBag.PapelUsuario = user.Papel;
                 return View();
             }
             else

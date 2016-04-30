@@ -36,7 +36,8 @@ namespace SistemaTNE
                 "~/Content/CSS/font-awesome.min.css",
                 "~/Content/CSS/bootstrap-select.css",
                 "~/Content/CSS/geral.css",
-                "~/Content/CSS/select2.css"
+                "~/Content/CSS/select2.css",
+                "~/Content/CSS/bootstrap-dialog.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts_dependentes").Include(
@@ -51,7 +52,8 @@ namespace SistemaTNE
                 "~/Scripts/bootstrap-select.js",
                 "~/Scripts/select2.js",                      
                 "~/Scripts/chart.min.js",
-                "~/Scripts/jquery.unobtrusive-ajax.js"
+                "~/Scripts/jquery.unobtrusive-ajax.js",
+                "~/Scripts/bootstrap-dialog.js"
                 ));
         }
     }

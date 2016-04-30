@@ -77,6 +77,7 @@
     <Compile Include="Repositorio\Concreto\BaseRepositorio.cs" />
     <Compile Include="Repositorio\Concreto\UsuariosRepositorio.cs" />
     <Compile Include="Repositorio\SADContext.cs" />
+    <Compile Include="Utils\EnumUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewBag.Title</title>
+    <title>SAD TNE</title>
     <!-- Bootstrap Core CSS -->
     @* <link href="~/Content/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -87,11 +87,11 @@
                 </li>
                 -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-u''"></i> Administrador <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-u''"></i> @ViewBag.NomeUsuario <b class="caret"></b></a>
                     <ul class="dropdown-menu">
 
                         <li>
-                            <a id="#Logout" href="../Home/Desautenticar"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a id="Logout" href="../Home/Desautenticar"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -100,7 +100,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 
             @{ 
-                if (ViewBag.Usuario == PapelUsuario.Administrador)
+                if (ViewBag.PapelUsuario == PapelUsuario.Administrador)
                 {
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
@@ -123,7 +123,7 @@
                 </ul>
             </div>
                 }
-                else if (ViewBag.Usuario == PapelUsuario.Gestor)
+                else if (ViewBag.PapelUsuario == PapelUsuario.Gestor)
                 {
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav side-nav">
