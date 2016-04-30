@@ -2,12 +2,12 @@
 
     $("#NovoUsuario").on('click', function () {
 
-        CarregarPartialView('Novo', 'Usuario');
+        CarregarPartialView('Novo', 'Usuarios');
     });
 
     $('#ListaUsuarios').on('click', function () {
 
-        CarregarPartialView('Lista', 'Usuario', function () {
+        CarregarPartialView('Lista', 'Usuarios', function () {
 
             $('#tblUsuarios').bootstrapTable({
                 idField: 'UsuarioId',

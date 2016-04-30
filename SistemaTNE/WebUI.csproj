@@ -164,21 +164,21 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\FerramentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OLAPController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\Seguranca\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Controllers\Seguranca\CustomPrincipal.cs" />
+    <Compile Include="Controllers\Seguranca\WizardSecurity.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DropTableModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AutenticacaoModel.cs" />
+    <Compile Include="Models\CriarUsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -310,6 +310,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-1.12.0.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -335,14 +337,17 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutGestor.cshtml" />
     <Content Include="Views\Shared\DropTable.cshtml" />
-    <Content Include="Views\Usuario\Novo.cshtml" />
-    <Content Include="Views\Usuario\Lista.cshtml" />
+    <Content Include="Views\Usuarios\Novo.cshtml" />
+    <Content Include="Views\Usuarios\Lista.cshtml" />
     <Content Include="Views\Ferramentas\ImportarDados.cshtml" />
-    <Content Include="Views\Cliente\NovoEditar.cshtml" />
-    <Content Include="Views\Cliente\Lista.cshtml" />
-    <Content Include="Views\Cliente\Relatorio.cshtml" />
+    <Content Include="Views\Clientes\NovoEditar.cshtml" />
+    <Content Include="Views\Clientes\Lista.cshtml" />
+    <Content Include="Views\Clientes\Relatorio.cshtml" />
     <Content Include="Views\OLAP\Consulta.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Home\AcessoNegado.cshtml" />
+    <Content Include="Views\Usuarios\View_.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -355,6 +360,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DominioModel\DominioModel.csproj">
+      <Project>{46C7A07C-5599-410A-A928-1FF4723BE0AD}</Project>
+      <Name>DominioModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

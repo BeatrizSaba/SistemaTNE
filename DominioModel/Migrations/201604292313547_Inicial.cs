@@ -68,7 +68,7 @@ namespace DominioModel.Migrations
                         RamoAtividadeID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ClienteID)
-                .ForeignKey("dbo.RamoAtividade", t => t.RamoAtividadeID)
+                .ForeignKey("dbo.RamoAtividade", t => t.RamoAtividadeID, cascadeDelete: true)
                 .ForeignKey("dbo.Endereco", t => t.EnderecoID)
                 .Index(t => t.EnderecoID)
                 .Index(t => t.RamoAtividadeID);
@@ -167,8 +167,10 @@ namespace DominioModel.Migrations
                         Senha = c.String(nullable: false, maxLength: 30),
                         Nome = c.String(nullable: false, maxLength: 40),
                         Papel = c.Int(nullable: false),
+                        Bloqueado = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.UsuarioID);
+                .PrimaryKey(t => t.UsuarioID)
+                .Index(t => t.Login, unique: true, name: "UNQ_LOGIN");
             
             CreateTable(
                 "dbo.ClientesMarcasPreferidas",
@@ -179,7 +181,7 @@ namespace DominioModel.Migrations
                     })
                 .PrimaryKey(t => new { t.ClienteID, t.MarcaID })
                 .ForeignKey("dbo.Cliente", t => t.ClienteID, cascadeDelete: true)
-                .ForeignKey("dbo.Marca", t => t.MarcaID)
+                .ForeignKey("dbo.Marca", t => t.MarcaID, cascadeDelete: true)
                 .Index(t => t.ClienteID)
                 .Index(t => t.MarcaID);
             
@@ -192,7 +194,7 @@ namespace DominioModel.Migrations
                     })
                 .PrimaryKey(t => new { t.ClienteID, t.PostoID })
                 .ForeignKey("dbo.Cliente", t => t.ClienteID, cascadeDelete: true)
-                .ForeignKey("dbo.Posto", t => t.PostoID)
+                .ForeignKey("dbo.Posto", t => t.PostoID, cascadeDelete: true)
                 .Index(t => t.ClienteID)
                 .Index(t => t.PostoID);
             
@@ -205,7 +207,7 @@ namespace DominioModel.Migrations
                     })
                 .PrimaryKey(t => new { t.ClienteID, t.ServicoID })
                 .ForeignKey("dbo.Cliente", t => t.ClienteID, cascadeDelete: true)
-                .ForeignKey("dbo.Servico", t => t.ServicoID)
+                .ForeignKey("dbo.Servico", t => t.ServicoID, cascadeDelete: true)
                 .Index(t => t.ClienteID)
                 .Index(t => t.ServicoID);
             
@@ -235,6 +237,7 @@ namespace DominioModel.Migrations
             DropIndex("dbo.ClientesPostosFavoritos", new[] { "ClienteID" });
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "MarcaID" });
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "ClienteID" });
+            DropIndex("dbo.Usuario", "UNQ_LOGIN");
             DropIndex("dbo.Veiculo", new[] { "ClienteID" });
             DropIndex("dbo.MudancaEstadoCliente", new[] { "ClienteID" });
             DropIndex("dbo.Contato", new[] { "ClienteID" });

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Infrastructure.Annotations;
 using DominioModel.Entidades;
+using System.Linq;
 
 namespace DominioModel.Repositorio
 { 
@@ -12,6 +13,7 @@ namespace DominioModel.Repositorio
         public SADContext()
             : base("name=SADContext")
         {
+
         }
 
         public virtual DbSet<Bairro> Bairros { get; set; }
@@ -33,6 +35,11 @@ namespace DominioModel.Repositorio
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            modelBuilder.Entity<Usuario>().Property(e => e.Login)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UNQ_LOGIN")
+                {
+                    IsUnique = true
+                }));
 
             modelBuilder.Entity<Cliente>().Property(e => e.DataCriacao).HasColumnType("date");
             modelBuilder.Entity<Cliente>().Property(e => e.DataModificacao).HasColumnType("date");
@@ -113,6 +120,5 @@ namespace DominioModel.Repositorio
                 .IsUnicode(false);
         }
 
-        
     }
 }

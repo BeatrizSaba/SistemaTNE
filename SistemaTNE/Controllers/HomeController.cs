@@ -1,4 +1,10 @@
-﻿using System;
+﻿using DominioModel.Entidades;
+using DominioModel.Repositorio;
+using DominioModel.Repositorio.Abstrato;
+using DominioModel.Repositorio.Concreto;
+using SistemaTNE.Controllers.Seguranca;
+using SistemaTNE.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,47 +14,68 @@ namespace SistemaTNE.Controllers
 {
     public class HomeController : Controller
     {
-        private const string USUARIO = "usuario";
+        IUsuariosRepositorio userRep = new UsuariosRepositorio(new SADContext());
 
+
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Index()
         {
-            ViewBag.Usuario = Session[USUARIO];
-            return View();
+            CustomPrincipal user = System.Web.HttpContext.Current.User as CustomPrincipal;
+
+            if (user != null)
+            {
+                ViewBag.Usuario = user.Papel;
+                return View();
+            }
+            else
+                return RedirectToAction("Autenticacao");
         }
 
         public ActionResult Autenticacao()
-        {            
+        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Autenticacao(FormCollection formData)
+        public ActionResult Autenticacao(AutenticacaoModel model)
         {
-            if (formData[0].Equals("Administrador") || (formData[0].Equals("Gestor")))
+            if (ModelState.IsValid)
             {
-                Session[USUARIO] = formData[0];
+                var usuario = userRep.Autenticar(new Usuario() { Login = model.Login, Senha = model.Senha });
 
-                return RedirectToAction("Index");
+                if (usuario != null)
+                {
+                    CustomPrincipalSerializeModel securityModel = new CustomPrincipalSerializeModel()
+                    {
+                        UsuarioID = usuario.UsuarioID,
+                        Nome = usuario.Nome,
+                        Papel = usuario.Papel
+                    };
+
+                    WizardSecurity.CreateFormAuthenticationTicket(this, securityModel);
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Autenticacao", "Login ou senha inválido.");
+                }
             }
-            else
-                return View();
-        }
-
-
-        #region Default Actions
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
+        public ActionResult Desautenticar()
+        {
+            //deslogar
+
+            return RedirectToAction("Autenticacao");
+        }
+
+        public ActionResult AcessoNegado()
+        {
             return View();
         }
-        #endregion
     }
 }

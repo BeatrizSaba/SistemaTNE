@@ -21,5 +21,8 @@ namespace DominioModel.Entidades
         public string Nome { get; set; }
 
         public PapelUsuario Papel { get; set; }
+
+        [Required]
+        public bool Bloqueado { get; set; }
     }
 }

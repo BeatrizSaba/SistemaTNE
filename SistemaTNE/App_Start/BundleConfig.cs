@@ -27,8 +27,7 @@ namespace SistemaTNE
                       "~/Content/bootstrap.css"
                       //,"~/Content/site.css"
                       ));
-
-
+   
 
             bundles.Add(new StyleBundle("~/bundles/estilos_dependentes").Include(
                 "~/Content/CSS/bootstrap-table.css",
@@ -50,7 +49,9 @@ namespace SistemaTNE
                 "~/Scripts/App/sistema.js",
                 "~/Scripts/bootstrap-select.js",
                 "~/Scripts/select2.js",                      
-                "~/Scripts/chart.min.js"));
+                "~/Scripts/chart.min.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"
+                ));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DominioModel.Entidades;
+
+@{
     Layout = null;
 }
 
@@ -104,7 +106,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 
             @{ 
-                if (ViewBag.Usuario.Equals("Administrador"))
+                if (ViewBag.Usuario == PapelUsuario.Administrador)
                 {
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
@@ -127,7 +129,7 @@
                 </ul>
             </div>
                 }
-                else if (ViewBag.Usuario.Equals("Gestor"))
+                else if (ViewBag.Usuario == PapelUsuario.Gestor)
                 {
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav side-nav">

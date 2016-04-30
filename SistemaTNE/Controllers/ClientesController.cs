@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SistemaTNE.Controllers
 {
-    public class ClienteController : Controller
+    public class ClientesController : Controller
     {
         // GET: Cliente
         public ActionResult NovoEditar()

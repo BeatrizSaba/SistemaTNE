@@ -26,16 +26,8 @@ namespace DominioModel.Migrations
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );
-            //
-
-            context.Usuarios.AddOrUpdate(
-                new Usuario()
-                {
-                    Login = "Admin",
-                    Senha = "123456",
-                    Nome = "Administrador",
-                    Papel = PapelUsuario.Administrador
-                });
+            //     
+            base.Seed(context);    
         }
     }
 }
