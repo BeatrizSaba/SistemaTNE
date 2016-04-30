@@ -10,7 +10,7 @@ namespace SistemaTNE.Controllers.Seguranca
 {
     public class WizardSecurity
     {
-        public static void CreateFormAuthenticationTicket(Controller control, CustomPrincipalSerializeModel serializeModel)
+        public static void SignIn(Controller control, CustomPrincipalSerializeModel serializeModel)
         {
             /*
             CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
@@ -32,6 +32,11 @@ namespace SistemaTNE.Controllers.Seguranca
             string encTicket = FormsAuthentication.Encrypt(authTicket);
             HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
             control.Response.Cookies.Add(faCookie);
+        }
+
+        public static void SignOut()
+        {
+            FormsAuthentication.SignOut();
         }
 
         public static void Application_PostAuthenticateRequest(HttpApplication app, Object sender, EventArgs e)

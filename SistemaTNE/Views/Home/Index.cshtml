@@ -36,14 +36,8 @@
         <script src="~/Scripts/bootstrap.min.js"></script>
     *@
 
-    <!-- RENDER SECTION -->
     @Styles.Render("~/Content/css");
-    @Styles.Render("~/bundles/estilos_dependentes");
-
-    @Scripts.Render("~/bundles/jquery");
-    @Scripts.Render("~/bundles/jqueryval");
-    @Scripts.Render("~/bundles/bootstrap");
-    @Scripts.Render("~/bundles/scripts_dependentes");   
+    @Styles.Render("~/bundles/estilos_dependentes");   
 </head>
 <body>
     <div id="wrapper">
@@ -97,7 +91,7 @@
                     <ul class="dropdown-menu">
 
                         <li>
-                            <a id="#Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a id="#Logout" href="../Home/Desautenticar"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -170,6 +164,11 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
+
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/scripts_dependentes");
 </body>
 </html>
 

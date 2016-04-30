@@ -31,12 +31,14 @@ namespace SistemaTNE.Controllers
                 return RedirectToAction("Autenticacao");
         }
 
+        [AllowAnonymous]
         public ActionResult Autenticacao()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Autenticacao(AutenticacaoModel model)
         {
             if (ModelState.IsValid)
@@ -52,7 +54,7 @@ namespace SistemaTNE.Controllers
                         Papel = usuario.Papel
                     };
 
-                    WizardSecurity.CreateFormAuthenticationTicket(this, securityModel);
+                    WizardSecurity.SignIn(this, securityModel);
 
                     return RedirectToAction("Index");
                 }
@@ -66,13 +68,15 @@ namespace SistemaTNE.Controllers
         }
 
 
+        [CustomAuthorize(Roles = "Administrador,Gestor,Frentista")]
         public ActionResult Desautenticar()
         {
-            //deslogar
+            WizardSecurity.SignOut();
 
             return RedirectToAction("Autenticacao");
         }
 
+        [CustomAuthorize(Roles = "Administrador,Gestor,Frentista")]
         public ActionResult AcessoNegado()
         {
             return View();

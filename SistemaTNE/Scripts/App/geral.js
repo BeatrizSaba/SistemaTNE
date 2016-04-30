@@ -30,6 +30,9 @@ function CarregarPartialView(action, controller, onSuccess, onError, container)
         url: "../" + controller + "/" + action,
         success: function (partialView, status, xhr) {
 
+            if (VaParaAutenticacaoSeSignOut(partialView))
+                return;
+
             $('#' + container).html(partialView);
 
             InicializarEstilos(container);
@@ -46,6 +49,15 @@ function CarregarPartialView(action, controller, onSuccess, onError, container)
 
 function InicializarEstilos(raiz)
 {
-    var a = $('#' + raiz + ' select.select2-single,.select2-mult');
     $('#' + raiz + ' select.select2-single,.select2-mult').select2();
+}
+
+function VaParaAutenticacaoSeSignOut(html)
+{
+    if (html.indexOf('pagina_autenticacao') >= 0) {
+        window.location.assign("../Home/Autenticacao");
+        return true;
+    }
+
+    return false;
 }

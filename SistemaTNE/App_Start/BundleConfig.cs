@@ -44,6 +44,7 @@ namespace SistemaTNE
                 "~/Scripts/waitMe.js",
                 "~/Scripts/App/constantes.js",
                 "~/Scripts/App/geral.js",
+                "~/Scripts/App/sistema.js",
                 "~/Scripts/App/usuarios.js",
                 "~/Scripts/App/clientes.js",
                 "~/Scripts/App/sistema.js",
