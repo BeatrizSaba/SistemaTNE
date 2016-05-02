@@ -1,6 +1,6 @@
 ﻿@model SistemaTNE.Models.CriarUsuarioModel
 
-<div  id="tabNovoUsuario" class="tab-pane fade" style="height: 800px">
+<div  id="tabNovoUsuario" class="tab-pane fade">
     @using (Ajax.BeginForm("Novo", "Usuarios", new AjaxOptions { OnSuccess = "PostUsuarioOnSuccess", OnFailure = "PostUsuarioOnErro", OnComplete = "PostUsuarioOnComplete" }))
     {
         <div class="form-horizontal">

@@ -345,7 +345,6 @@
     <Content Include="Views\Home\Autenticacao.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutGestor.cshtml" />
-    <Content Include="Views\Shared\DropTable.cshtml" />
     <Content Include="Views\Usuarios\Novo.cshtml" />
     <Content Include="Views\Usuarios\Lista.cshtml" />
     <Content Include="Views\Ferramentas\ImportarDados.cshtml" />
@@ -354,7 +353,6 @@
     <Content Include="Views\Clientes\Relatorio.cshtml" />
     <Content Include="Views\OLAP\Consulta.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Home\AcessoNegado.cshtml" />
   </ItemGroup>
   <ItemGroup>
