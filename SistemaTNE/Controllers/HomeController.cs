@@ -44,7 +44,18 @@ namespace SistemaTNE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var usuario = userRep.Autenticar(new Usuario() { Login = model.Login, Senha = model.Senha });
+                Usuario usuario = null;
+
+                try
+                {
+                    usuario = userRep.Autenticar(new Usuario() { Login = model.Login, Senha = model.Senha });
+                }
+                catch (BloqueioException)
+                {
+                    ModelState.AddModelError("Autenticacao", "Este usuário não tem permissão para acessar o sistema.");
+
+                    return View();
+                }
 
                 if (usuario != null)
                 {

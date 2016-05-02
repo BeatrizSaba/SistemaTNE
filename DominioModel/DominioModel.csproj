@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\Abstrato\IUsuariosRepositorio.cs" />
     <Compile Include="Repositorio\Concreto\BaseRepositorio.cs" />
+    <Compile Include="Repositorio\Concreto\BloqueioException.cs" />
     <Compile Include="Repositorio\Concreto\UsuariosRepositorio.cs" />
     <Compile Include="Repositorio\SADContext.cs" />
     <Compile Include="Utils\EnumUtils.cs" />

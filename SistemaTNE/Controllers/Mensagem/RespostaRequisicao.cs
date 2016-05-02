@@ -57,12 +57,21 @@ namespace SistemaTNE.Controllers.Mensagem
             };
         }
 
-        internal static RespostaRequisicao SimpleOK()
+        public static RespostaRequisicao SimpleOK()
         { 
             return new RespostaRequisicao()
             {
                 Status = STATUS_OK,
                 Mensagem = null
+            };
+        }
+
+        public static RespostaRequisicao SimpleError(string erro)
+        {
+            return new RespostaRequisicao()
+            {
+                Status = STATUS_ERRO,
+                Mensagem = erro
             };
         }
 

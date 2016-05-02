@@ -12,9 +12,7 @@
 
     $('#ListaUsuarios').on('click', function () {
 
-        AtivarPartialView('divListaUsarios', 'Lista', 'Usuarios', function () {
-            CriarTabelaUsuarios();
-        });
+        AtivarPartialViewListaUsuarios();
     });
 
     $('#ImportarDados').on('click', function () {
@@ -27,7 +25,7 @@
 function CriarTabelaUsuarios() {
 
     $('#tblUsuarios').bootstrapTable({
-        idField: 'UsuarioId',
+        uniqueId: 'UsuarioId',
         columns: [{
             radio: true,
         }, {
@@ -71,9 +69,7 @@ function PostUsuarioOnSuccess(data, status, xhr) {
 
         LimparCampos('tabNovoUsuario');
 
-        AtivarPartialView('divListaUsarios', 'Lista', 'Usuarios', function () {
-            CriarTabelaUsuarios();
-        }, function () {
+        AtivarPartialViewListaUsuarios(function () {
             AtivarAlert('success', 'Usuário cadastrado.', 'listaUsuariosAlerta');
         });
        
@@ -93,4 +89,70 @@ function PostUsuarioOnErro() {
 
 function PostUsuarioOnComplete() {
     DesativarSpin();
+}
+
+function AjusteBarraAcoes(container)
+{
+    var toolbar = $('.fixed-table-toolbar', '#' + container);
+    var btngroup = $('.btn-actions.btn-group', '#' + container);
+
+    $(toolbar).prepend(btngroup);
+}
+
+function AtivarPartialViewListaUsuarios(onShow) {
+
+    AtivarPartialView('divListaUsarios', 'Lista', 'Usuarios', function () {
+        CriarTabelaUsuarios();
+        AjusteBarraAcoes('divListaUsarios');
+
+        $("#BloquearUsuario").on('click', function () {
+
+            var id = getSelectedUsuarioID();
+
+            if (id === null) {
+                AtivarAlert('warning', 'Selecione um usuário', 'listaUsuariosAlerta');
+            }
+            else {
+                AtivarSpin();
+
+                $.ajax({
+                    url: '../Usuarios/MudarBloqueio/' + id,
+                    method: 'POST',
+                    success: function (data) {
+                        if (data.Status === 'OK') {
+
+                            /*
+                            var id =  getSelectedUsuarioID();
+                            var data = $('#tblUsuarios').bootstrapTable('getRowByUniqueId', id);
+                            var bloq = data.Mensagem.indexOf('bloqueado') >= 0;
+                            data.Bloqueado = bloq ? 'Sim' : 'Não';
+                            $('#tblUsuarios').bootstrapTable('updateByUniqueId', id, data);
+                            */
+                            AtivarAlert('success', data.Mensagem, 'listaUsuariosAlerta');
+                        } else if (data.Status === 'ERRO') {
+                            AlertaErroInterno(data.Mensagem);
+                        }
+                    },
+                    error: function () {
+                        AlertaErroInterno();
+                    },
+                    complete: function () {
+                        DesativarSpin();
+                    }
+                });
+            }
+        });
+
+    }, onShow);
+}
+
+function getSelectedUsuarioID()
+{
+    var selected = $('#tblUsuarios').bootstrapTable('getSelections');
+
+    if (selected.length != 0) {
+        return selected[0].UsuarioID;
+    }
+    else
+        return null;
 }

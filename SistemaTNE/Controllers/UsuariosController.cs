@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using DominioModel.Utils;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace SistemaTNE.Controllers
 {
@@ -114,6 +115,46 @@ namespace SistemaTNE.Controllers
             }
 
             return Json(usuarios);
+        }
+
+        [CustomAuthorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult MudarBloqueio(int? id)
+        {
+            try
+            {
+                if (id.HasValue)
+                {
+                    var usuario = userRep.RetornarPorID(id.GetValueOrDefault());
+
+                    if (usuario != null)
+                    {
+                        userRep.BloquearUsuario(usuario.UsuarioID, !usuario.Bloqueado);
+
+                        string msg;
+
+                        if (usuario.Bloqueado)
+                            msg = "Usuário desbloqueado.";
+                        else
+                            msg = "Usuario bloqueado.";
+
+
+                        return Json(RespostaRequisicao.SimpleText(msg));
+                    }
+                    else
+                    {
+                        return Json(RespostaRequisicao.SimpleError("Usuário não encontrado."));
+                    }
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
