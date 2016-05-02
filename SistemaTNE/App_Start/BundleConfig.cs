@@ -50,10 +50,11 @@ namespace SistemaTNE
                 "~/Scripts/App/clientes.js",
                 "~/Scripts/App/sistema.js",
                 "~/Scripts/bootstrap-select.js",
-                "~/Scripts/select2.js",                      
+                "~/Scripts/select2.js",
                 "~/Scripts/chart.min.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js",
-                "~/Scripts/bootstrap-dialog.js"
+                "~/Scripts/bootstrap-dialog.js",
+                "~/Scripts/bsModelCustom.js"
                 ));
         }
     }

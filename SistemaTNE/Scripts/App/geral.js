@@ -137,6 +137,14 @@ function AtivarAlert(tipo, msg, divContainer) {
     }
 }
 
+function DesativarAlert(divContainer) {
+    try {
+        $('#' + divContainer + '').empty();
+    } catch (e) {
+        console.log('GERAL - MÉTODO DesativarAlert(divContainer: ' + divContainer + ') - ' + e.message);
+    }
+}
+
 
 function AtivarPartialView(tab, action, controller, onLoad, onShow) {
     if ($('#' + tab).length === 0) {

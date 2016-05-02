@@ -178,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AltSenhaUsuarioModel.cs" />
     <Compile Include="Models\AutenticacaoModel.cs" />
     <Compile Include="Models\CriarUsuarioModel.cs" />
     <Compile Include="Models\VistaUsuarioModel.cs" />
@@ -313,6 +314,7 @@
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bsModelCustom.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -354,6 +356,7 @@
     <Content Include="Views\OLAP\Consulta.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AcessoNegado.cshtml" />
+    <Content Include="Views\Usuarios\AlterarSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

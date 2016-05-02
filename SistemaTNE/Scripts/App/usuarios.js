@@ -105,7 +105,73 @@ function AtivarPartialViewListaUsuarios(onShow) {
         CriarTabelaUsuarios();
         AjusteBarraAcoes('divListaUsarios');
 
+        $("#AlterarSenhaUsuario").on('click', function () {
+
+            DesativarAlert('listaUsuariosAlerta');
+
+            var id = getSelectedUsuarioID();
+
+            if (id === null) {
+                AtivarAlert('warning', 'Selecione um usuário', 'listaUsuariosAlerta');
+            }
+            else {
+                $.ajax({
+                    url: '../Usuarios/AlterarSenha',
+                    method: 'GET',
+                    success: function (partialView) {
+                        ModelShow({
+                            title: 'Alterar senha',
+                            bodyModel: partialView,
+                            onOK: function () {
+
+                                //AtivarSpin();
+                                DesabilitarTodasValidacoes();
+
+                                var id = getSelectedUsuarioID();
+
+                                $.ajax({
+                                    url: '../Usuarios/AlterarSenha/' + id,
+                                    method: 'POST',
+                                    data: $('#frmAlterarSenha').serialize(),
+                                    success: function (data, status ,xhr) {
+
+                                        if (data.Status === 'VALIDACAO') {
+
+                                            data.Mensagem.forEach(function (val) {
+                                                HabilitarValidacao(val.Campo, val.Erro);
+                                            });
+
+                                        } else if (data.Status === 'OK') {
+
+                                            ModelHide();
+                                            AtivarAlert('success', data.Mensagem, 'listaUsuariosAlerta');
+
+                                        } else if (data.Status === 'ERRO') {
+                                            ModelHide();
+                                            AlertaErroInterno(data.Mensagem);
+                                        }
+
+                                    },
+                                    error: function () {
+                                        AlertaErroInterno();
+                                    },
+                                    complete: function () {
+                                        // DesativarSpin();
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function () {
+                        AlertaErroInterno();
+                    }
+                });          
+            }
+        });
+
         $("#BloquearUsuario").on('click', function () {
+
+            DesativarAlert('listaUsuariosAlerta');
 
             var id = getSelectedUsuarioID();
 

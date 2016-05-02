@@ -143,8 +143,58 @@ namespace SistemaTNE.Controllers
                     }
                     else
                     {
-                        return Json(RespostaRequisicao.SimpleError("Usuário não encontrado."));
+                        return Json(RespostaRequisicao.SimpleError("Usuário não existe."));
                     }
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [CustomAuthorize(Roles = "Administrador")]
+        public ActionResult AlterarSenha()
+        {
+            return PartialView();
+        }
+
+        [CustomAuthorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult AlterarSenha(int? id, AltSenhaUsuarioModel model)
+        {
+            try
+            {             
+                if (id.HasValue)
+                {                 
+                    if (ModelState.IsValid)
+                    {
+                        if (!model.Senha.Equals(model.ConfirmarSenha))
+                        {
+                            ModelState.AddModelError("ConfirmarSenha", "As senhas não conferem");
+
+                            return Json(RespostaRequisicao.FromModelState(ModelState));
+                        }
+
+                        var usuario = userRep.RetornarPorID(id.GetValueOrDefault());
+
+                        if (usuario != null)
+                        {
+                            usuario.Senha = model.Senha;
+
+                            userRep.Alterar(usuario);
+
+                            return Json(RespostaRequisicao.SimpleText("Senha alterada."));
+                        }
+                        else
+                            return Json(RespostaRequisicao.SimpleError("Usuário não existe"));
+                    }
+                    else
+                        return Json(RespostaRequisicao.FromModelState(ModelState));
                 }
                 else
                 {
