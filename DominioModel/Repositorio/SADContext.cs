@@ -45,6 +45,7 @@ namespace DominioModel.Repositorio
             modelBuilder.Entity<Cliente>().Property(e => e.DataModificacao).HasColumnType("date");
             modelBuilder.Entity<Cliente>().Property(e => e.FormaPagamentoUsada).IsOptional();
             modelBuilder.Entity<Cliente>().Property(e => e.FrequenciaVisitaPosto).IsOptional();
+            modelBuilder.Entity<Cliente>().Property(e => e.RamoAtividadeID).IsOptional();
 
             modelBuilder.Entity<MudancaEstadoCliente>().HasKey(e => new { e.ClienteID, e.DataModificacao });
             modelBuilder.Entity<MudancaEstadoCliente>().Property(e => e.ClienteID).HasColumnOrder(0);

@@ -173,7 +173,7 @@ namespace SistemaTNE.Controllers
                 {                 
                     if (ModelState.IsValid)
                     {
-                        if (!model.Senha.Equals(model.ConfirmarSenha))
+                        if (!model.NovaSenha.Equals(model.ConfirmarSenha))
                         {
                             ModelState.AddModelError("ConfirmarSenha", "As senhas não conferem");
 
@@ -184,7 +184,7 @@ namespace SistemaTNE.Controllers
 
                         if (usuario != null)
                         {
-                            usuario.Senha = model.Senha;
+                            usuario.Senha = model.NovaSenha;
 
                             userRep.Alterar(usuario);
 

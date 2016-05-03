@@ -72,17 +72,17 @@ function VaParaAutenticacaoSeSignOut(html)
 
 function HabilitarValidacao(campoId, erroMsg) {
 
-    $('span[data-valmsg-for="' + campoId + '"]').append(
+    $('[data-valmsg-for="' + campoId + '"]').append(
        '<span for="' + campoId + '" class="">' + erroMsg + '</span><br/>'
     );
 }
 
 function DesabilitarValidacao(campoId) {
-    $("span[data-valmsg-for='" + campoId + "']").html("");
+    $("[data-valmsg-for='" + campoId + "']").html("");
 }
 
 function DesabilitarTodasValidacoes() {
-    $("span[data-valmsg-for]").html("");
+    $("[data-valmsg-for]").html("");
 }
 
 function AlertaSucesso(msg)

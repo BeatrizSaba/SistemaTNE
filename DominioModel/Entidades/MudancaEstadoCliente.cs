@@ -12,9 +12,9 @@ namespace DominioModel.Entidades
         public DateTime DataModificacao { get; set; }
 
 
-        public int EstadoAnterior { get; set; }
+        public EstadoCliente EstadoAnterior { get; set; }
 
-        public int EstadoNovo { get; set; }
+        public EstadoCliente EstadoNovo { get; set; }
 
         [StringLength(200)]
         public string Observacao { get; set; }

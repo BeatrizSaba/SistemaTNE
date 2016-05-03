@@ -25,7 +25,7 @@
 function CriarTabelaUsuarios() {
 
     $('#tblUsuarios').bootstrapTable({
-        uniqueId: 'UsuarioId',
+        uniqueId: 'UsuarioID',
         columns: [{
             radio: true,
         }, {
@@ -115,6 +115,9 @@ function AtivarPartialViewListaUsuarios(onShow) {
                 AtivarAlert('warning', 'Selecione um usuário', 'listaUsuariosAlerta');
             }
             else {
+
+                AtivarSpin();
+
                 $.ajax({
                     url: '../Usuarios/AlterarSenha',
                     method: 'GET',
@@ -164,6 +167,9 @@ function AtivarPartialViewListaUsuarios(onShow) {
                     },
                     error: function () {
                         AlertaErroInterno();
+                    },
+                    complete: function () {
+                        DesativarSpin();
                     }
                 });          
             }

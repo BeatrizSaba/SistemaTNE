@@ -8,11 +8,12 @@ namespace SistemaTNE.Models
 {
     public class AltSenhaUsuarioModel
     {
+        [Display(Name = "Nova senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(20, ErrorMessage = "O campo {0} não pode conter mais de {1} caracteres")]
         [MinLength(6, ErrorMessage = "O campo {0} deve conter no mínimo {1} caracteres")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public string NovaSenha { get; set; }
 
         [Display(Name = "Confirmar senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

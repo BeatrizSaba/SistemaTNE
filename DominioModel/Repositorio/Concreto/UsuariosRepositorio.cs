@@ -37,7 +37,7 @@ namespace DominioModel.Repositorio.Concreto
                             where urs.Login.Equals(usuario.Login) && urs.Senha.Equals(usuario.Senha)
                             select urs).SingleOrDefault();
 
-            if (userAuth.Bloqueado)
+            if ((userAuth != null) &&  (userAuth.Bloqueado))
                 throw new BloqueioException();
 
             return (userAuth);

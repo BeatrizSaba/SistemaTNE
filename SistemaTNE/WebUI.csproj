@@ -175,11 +175,14 @@
     <Compile Include="Controllers\Seguranca\CustomPrincipal.cs" />
     <Compile Include="Controllers\Seguranca\WizardSecurity.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Exceptions\EntidadeNaoExisteException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AltSenhaUsuarioModel.cs" />
     <Compile Include="Models\AutenticacaoModel.cs" />
+    <Compile Include="Models\ClienteModal.cs" />
+    <Compile Include="Models\ClienteView.cs" />
     <Compile Include="Models\CriarUsuarioModel.cs" />
     <Compile Include="Models\VistaUsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -357,6 +360,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AcessoNegado.cshtml" />
     <Content Include="Views\Usuarios\AlterarSenha.cshtml" />
+    <Content Include="Views\Clientes\_Novo.cshtml" />
+    <Content Include="Views\Clientes\Novo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

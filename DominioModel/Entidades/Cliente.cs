@@ -28,6 +28,9 @@ namespace DominioModel.Entidades
         [StringLength(70)]
         public string Nome { get; set; }
 
+        [Required]
+        public DateTime DataNascimento { get; set; }
+
         public TipoPessoa TipoPessoa { get; set; }
 
         public EstadoCliente Estado { get; set; }
@@ -42,7 +45,7 @@ namespace DominioModel.Entidades
 
         public FormaPagamento FormaPagamentoUsada { get; set; }
 
-        public int RamoAtividadeID { get; set; }
+        public int? RamoAtividadeID { get; set; }
 
         public virtual RamoAtividade RamoAtividade { get; set; }
 
