@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using DominioModel.Utils;
+using System.Web.Script.Serialization;
 
 namespace SistemaTNE.Models
 {
@@ -184,6 +185,22 @@ namespace SistemaTNE.Models
                 };
 
                 cliente.Veiculos.Add(veic);
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+
+            if (this.Contatos != null)
+            {
+                 var contatos = json.Deserialize<List<ContatoModel>>(this.Contatos);
+
+                foreach(var cont in contatos)
+                {
+                    cliente.Contatos.Add(new Contato()
+                    {
+                        Nome = cont.Nome,
+                        Telefone = cont.Telefone
+                    });
+                }
             }
 
             return cliente;

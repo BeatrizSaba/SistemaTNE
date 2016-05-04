@@ -37,16 +37,18 @@
 
 function ModelShow(options) {
 
-    $('#btnModalOK').on('click', function () {
+    $('#btnModalOK').off();
+    $('#btnModalOK').on('click', function (e) {
 
         if ((options.onOK != undefined) && (options.onOK != null))
-            options.onOK();
+            options.onOK(e);
     });
 
-    $('#btnModalCancel').on('click', function () {
+    $('#btnModalCancel').off();
+    $('#btnModalCancel').on('click', function (e) {
 
         if ((options.onCancel != undefined) && (options.onCancel != null))
-            options.onCancel();
+            options.onCancel(e);
     });
 
     $('.modal-body').empty().html(options.bodyModel);

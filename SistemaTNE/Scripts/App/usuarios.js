@@ -63,7 +63,7 @@ function CriarTabelaUsuarios() {
 
 function PostUsuarioOnSuccess(data, status, xhr) {
 
-     DesabilitarTodasValidacoes();
+    DesabilitarTodasValidacoes('tabNovoUsuario');
 
     if (data.Status === "OK") {
 
@@ -76,7 +76,7 @@ function PostUsuarioOnSuccess(data, status, xhr) {
     }
     else if (data.Status === "VALIDACAO") {
         data.Mensagem.forEach(function (val) {
-            HabilitarValidacao(val.Campo, val.Erro);
+            HabilitarValidacao('tabNovoUsuario', val.Campo, val.Erro);
         });
     } else if (data.Status === "ERRO") {
         AlertaErroInterno(data.Mensagem);
@@ -128,7 +128,7 @@ function AtivarPartialViewListaUsuarios(onShow) {
                             onOK: function () {
 
                                 //AtivarSpin();
-                                DesabilitarTodasValidacoes();
+                                DesabilitarTodasValidacoes('tabNovoUsuario');
 
                                 var id = getSelectedUsuarioID();
 
@@ -141,7 +141,7 @@ function AtivarPartialViewListaUsuarios(onShow) {
                                         if (data.Status === 'VALIDACAO') {
 
                                             data.Mensagem.forEach(function (val) {
-                                                HabilitarValidacao(val.Campo, val.Erro);
+                                                HabilitarValidacao('tabNovoUsuario', val.Campo, val.Erro);
                                             });
 
                                         } else if (data.Status === 'OK') {

@@ -70,19 +70,19 @@ function VaParaAutenticacaoSeSignOut(html)
 
 */
 
-function HabilitarValidacao(campoId, erroMsg) {
+function HabilitarValidacao(raiz, campoId, erroMsg) {
 
-    $('[data-valmsg-for="' + campoId + '"]').append(
+    $('#' + raiz + ' [data-valmsg-for="' + campoId + '"]').append(
        '<span for="' + campoId + '" class="">' + erroMsg + '</span><br/>'
     );
 }
 
-function DesabilitarValidacao(campoId) {
-    $("[data-valmsg-for='" + campoId + "']").html("");
+function DesabilitarValidacao(raiz, campoId) {
+    $("#" + raiz + " [data-valmsg-for='" + campoId + "']").html("");
 }
 
-function DesabilitarTodasValidacoes() {
-    $("[data-valmsg-for]").html("");
+function DesabilitarTodasValidacoes(raiz) {
+    $("#"+ raiz +" [data-valmsg-for]").html("");
 }
 
 function AlertaSucesso(msg)

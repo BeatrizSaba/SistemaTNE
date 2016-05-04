@@ -13,6 +13,7 @@
         <ul class="nav nav-pills barraAcoes">
             <li class="active"><a data-toggle="pill" href="#home">Dados Pessoais</a></li>
             <li><a data-toggle="pill" href="#menu1">Endereço</a></li>
+            <li><a data-toggle="pill" href="#menu3">Contato</a></li>
             <li><a data-toggle="pill" href="#menu2">Outros</a></li>
         </ul>
 
@@ -38,7 +39,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TipoPessoa, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.TipoPessoa, new { @Style = "width: 100%", @class = "form-control" })
+                        @Html.EnumDropDownListFor(model => model.TipoPessoa, "Selecionar...", new { @Style = "width: 100%", @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.TipoPessoa, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -48,13 +49,8 @@
                         @Html.HiddenFor(model => model.RamoAtividadeID)
                         @Html.LabelFor(model => model.RamoAtividadeID, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <select id="listRamosAtividade" style="width: 100%" class="form-control">
-                                <option value="0">Selecionar...</option>
-                                @foreach (var ramo in ViewBag.RamosAtividade)
-                                {
-                                    <option value="@ramo.RamoAtividadeID">@ramo.Descricao</option>
-                                }
-                            </select>
+                            @Html.DropDownList("ListaRamosAtividade", (IList<SelectListItem>)ViewBag.RamosAtividade, 
+                           new { @Class = "form-control", @Style = "width: 100%" })
                         </div>
                     </div>
                 }
@@ -62,7 +58,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.Estado, new { @Style = "width: 100%", @class = "form-control" })
+                        @Html.EnumDropDownListFor(model => model.Estado, "Selecionar...", new { @Style = "width: 100%", @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -140,12 +136,16 @@
                     @Html.LabelFor(model => model.Servicos, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.Servicos)
+                        @Html.DropDownList("ListaServicos", (IList <SelectListItem>) ViewBag.Servicos,
+                         new { @Class = "select2-mult form-control", @Style = "width: 100%", @multiple = "multiple" })
+                        @*
                         <select id="listServicos" class="select2-mult form-control" multiple="multiple" style="width:100%">
                             @foreach (var serv in ViewBag.Servicos)
                             {
                                 <option value="@serv.ServicoID">@serv.Descricao</option>
                             }
                         </select>
+                            *@
                     </div>
                 </div>
 
@@ -153,12 +153,16 @@
                     @Html.LabelFor(model => model.Postos, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.Postos)
+                        @Html.DropDownList("ListaPostos", (IList<SelectListItem>)ViewBag.Postos,
+                         new { @Class = "select2-mult form-control", @Style = "width: 100%", @multiple = "multiple" })
+                        @*
                         <select id="listPostos" class="select2-mult form-control" multiple="multiple" style="width:100%">
                             @foreach (var posto in ViewBag.Postos)
                             {
                                 <option value="@posto.PostoID">@posto.Nome</option>
                             }
                         </select>
+                            *@
                     </div>
                 </div>
 
@@ -182,17 +186,29 @@
                     @Html.LabelFor(model => model.Marcas, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.HiddenFor(model => model.Marcas)
+                        @Html.DropDownList("ListaMarcas", (IList<SelectListItem>)ViewBag.Marcas,
+                        new { @Class = "select2-mult form-control", @Style = "width: 100%", @multiple = "multiple" })
+                        @*
                         <select id="listMarcas" class="select2-mult form-control" multiple="multiple" style="width:100%">
                             @foreach (var marca in ViewBag.Marcas)
                             {
                                 <option value="@marca.MarcaID">@marca.Nome</option>
                             }
                         </select>
+                            *@
                     </div>
                 </div>
             </div>
 
-        </div>
+            <div id="menu3" class="tab-pane fade form-horizontal">
+                <div class="pull-left search btn-group btn-actions">
+                    <button id="btnAddContato" class="btn btn-primary">Adicionar</button>
+                    <button id="btnRemoveContato" class="btn btn-primary">Remover</button>
+                </div>
+                @Html.HiddenFor(m => m.Contatos)
+                <table id="tblClienteContatos"></table>
+            </div>
+            </div>
         <button id="btnSalvarCliente" type="submit" class="btn btn-primary">Salvar</button>
      }
 </div>

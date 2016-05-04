@@ -6,12 +6,15 @@
 
             ConfigurarDadosInvisiveisCliente();
 
+            ConfigurarTabelaClienteContatos();
+
             $('#btnSalvarCliente').on('click', function (e) {
          
                 getSelectValue('RamoAtividadeID', 'listRamosAtividade');
                 getMultSelectValues('Postos', 'listPostos');
                 getMultSelectValues('Marcas', 'listMarcas');
                 getMultSelectValues('Servicos', 'listServicos');
+                getContatos();
 
                 AtivarSpin();
             });
@@ -102,6 +105,9 @@ function AtivarPartialViewListaClientes(onShow) {
             }, {
                 field: 'UF',
                 title: 'UF'
+            }, {
+                field: 'Contatos',
+                title: 'Contato'
             }],
             showRefresh: true,
             //sidePagination: 'server',
@@ -127,6 +133,109 @@ function ConfigurarDadosInvisiveisCliente() {
     setDefaultMultSelect('Postos', 'listPostos');
     setDefaultMultSelect('Marcas', 'listMarcas');
     setDefaultMultSelect('Servicos', 'listServicos');
+}
+
+function ConfigurarTabelaClienteContatos(contatos)
+{
+    $('#btnAddContato').on('click', function (e) {
+        e.preventDefault();
+
+        AtivarSpin();
+
+        $.ajax({
+            url: '../Clientes/Contato',
+            success: function (partialView) {
+                window.modelContato
+                ModelShow({
+                    bodyModel: partialView,
+                    title: 'Contato',
+                    onOK: function () {
+                        AtivarSpin();
+                        $('#formContato').submit();
+                    },
+                    onCancel: function (e) {
+                        e.preventDefault();
+                    }
+                });
+            },
+            erro: function () {
+                AlertaErroInterno();
+            },
+            complete: function () {
+                DesativarSpin();
+            }
+        });
+    });
+
+    $('#btnRemoveContato').on('click', function (e) {
+        e.preventDefault();
+    });
+
+    $('#tblClienteContatos').bootstrapTable({
+        columns: [{
+            radio: true
+        }, {
+            field: 'Nome',
+            title: 'Nome'
+        }, {
+            field: 'Telefone',
+            title: 'Telefone'
+        }],      
+        pagination: true,
+        striped: true,
+        //toolbar: '#toolbarAbaAvaliados-Gerenciar',
+        search: true,
+        showToggle: true,
+        pageSize: 10,
+        showColumns: false
+    });
+
+    $('#menu3 .search input').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    AjusteBarraAcoes('menu3');
+}
+
+function PostContatoSuccess(data)
+{
+    DesabilitarTodasValidacoes('formContato');
+
+    if (data.Status === "OK")
+    {
+        $('#btnModalCancel').click();
+
+        var _nome = $("#formContato [name='Nome']").val();
+        var _telefone = $("#formContato [name='Telefone']").val();
+
+        $('#tblClienteContatos').bootstrapTable('append', [{ Nome: _nome, Telefone: _telefone }]);
+    }
+    else if (data.Status === "VALIDACAO")
+    {
+        data.Mensagem.forEach(function (val) {
+            HabilitarValidacao('formContato', val.Campo, val.Erro);
+        });
+    }
+}
+
+function PostContatoError()
+{
+    AlertaErroInterno();
+}
+
+function PostContatoComplete()
+{
+    DesativarSpin();
+}
+
+function getContatos()
+{
+    var contatos = $('#tblClienteContatos').bootstrapTable('getData', true);
+    var json = JSON.stringify(contatos);
+    $('#tabNovoEditarCliente [name="Contatos"]').val(json);
 }
 
 
@@ -182,7 +291,7 @@ function getMultSelectValues(inputSorce, multSelect) {
 
 function PostClienteSuccess(data, status, xhr) {
 
-    DesabilitarTodasValidacoes();
+    DesabilitarTodasValidacoes('tabNovoEditarCliente');
     DesativarAlert('listaClientesAlerta');
 
     if (data.Status === 'OK') {
@@ -193,7 +302,7 @@ function PostClienteSuccess(data, status, xhr) {
   
     } else if (data.Status === 'VALIDACAO') {
         data.Mensagem.forEach(function (val) {
-            HabilitarValidacao(val.Campo, val.Erro);
+            HabilitarValidacao('tabNovoEditarCliente', val.Campo, val.Erro);
         });
     } else if (data.Status === 'ERRO') {
         AlertaErroInterno(data.Mensagem);

@@ -51,8 +51,6 @@ namespace SistemaTNE.Models
         [Display(Name = "Placa")]
         public string PlacaVeiculo { get; set; }
 
-        public string Contatos { get; set; }
-
         public string Marcas { get; set; }
 
         [Display(Name = "Postos em que abastece")]
@@ -60,8 +58,8 @@ namespace SistemaTNE.Models
 
         [Display(Name = "Serviços utilizadados")]
         public string Servicos { get; set; }
-
-
+        
+        public string Contatos { get; set; }
 
         public static ICollection<ClienteView> ParseList(ICollection<Cliente> clientes)
         {
@@ -121,6 +119,17 @@ namespace SistemaTNE.Models
                         model.Postos += ",";
 
                     model.Postos += p.Nome;
+                }
+
+                foreach(var c in cl.Contatos)
+                {
+                    if (model.Contatos != null)
+                        model.Contatos += " / ";
+
+                    if (!String.IsNullOrEmpty(c.Nome))
+                        model.Contatos += String.Format("{0}: ", c.Nome);
+
+                    model.Contatos += c.Telefone;
                 }
 
                 modelList.Add(model);

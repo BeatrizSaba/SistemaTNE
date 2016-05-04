@@ -59,11 +59,7 @@ namespace SistemaTNE.Controllers
 
         public ActionResult Novo()
         {
-            SADContext context = new SADContext();
-            ViewBag.RamosAtividade = context.RamosAtividades.ToList();
-            ViewBag.Postos = context.Postos.ToList();
-            ViewBag.Servicos = context.Servicos.ToList();
-            ViewBag.Marcas = context.Marcas.ToList();
+            CriarSelects();
 
             return PartialView();
         }
@@ -101,5 +97,75 @@ namespace SistemaTNE.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+
+
+        public ActionResult Contato()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult Contato(ContatoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return Json(RespostaRequisicao.SimpleOK());
+            }
+            else
+                return Json(RespostaRequisicao.FromModelState(ModelState));
+        }
+
+        private void CriarSelects()
+        {
+            SADContext context = new SADContext();
+
+
+            IList<SelectListItem> selectRamosAtiv = (from ramo in context.RamosAtividades
+                                                     select new SelectListItem()
+                                                     {
+                                                         Text = ramo.Descricao,
+                                                         Value = ramo.RamoAtividadeID.ToString()
+                                                     }).ToList();
+
+            selectRamosAtiv.Insert(0, new SelectListItem()
+            {
+                Text = "Selecionar...",
+                Value = "0"
+            });
+
+            ViewBag.RamosAtividade = selectRamosAtiv;
+
+
+            IList<SelectListItem> selectPostos = (from posto in context.Postos
+                                                  select new SelectListItem()
+                                                  {
+                                                      Text = posto.Nome,
+                                                      Value = posto.PostoID.ToString()
+                                                  }).ToList();
+
+
+            ViewBag.Postos = selectPostos;
+
+
+            IList<SelectListItem> selectServicos = (from servico in context.Servicos
+                                                    select new SelectListItem()
+                                                    {
+                                                        Text = servico.Descricao,
+                                                        Value = servico.ServicoID.ToString()
+                                                    }).ToList();
+
+            ViewBag.Servicos = selectServicos;
+
+
+            IList<SelectListItem> selectMarcas = (from marca in context.Marcas
+                                                  select new SelectListItem()
+                                                  {
+                                                      Text = marca.Nome,
+                                                      Value = marca.MarcaID.ToString()
+                                                  }).ToList();
+
+            ViewBag.Marcas = selectMarcas;
+        }
+
     }
 }
