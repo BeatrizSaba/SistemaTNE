@@ -67,17 +67,9 @@
     <Compile Include="Entidades\UF.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Veiculo.cs" />
-    <Compile Include="Migrations\201604292313547_Inicial.cs" />
-    <Compile Include="Migrations\201604292313547_Inicial.Designer.cs">
-      <DependentUpon>201604292313547_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605022109392_addClienteDataNascimento.cs" />
-    <Compile Include="Migrations\201605022109392_addClienteDataNascimento.Designer.cs">
-      <DependentUpon>201605022109392_addClienteDataNascimento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605022251461_AlterClienteRamoOpcional.cs" />
-    <Compile Include="Migrations\201605022251461_AlterClienteRamoOpcional.Designer.cs">
-      <DependentUpon>201605022251461_AlterClienteRamoOpcional.cs</DependentUpon>
+    <Compile Include="Migrations\201605042311011_DB_Inicial.cs" />
+    <Compile Include="Migrations\201605042311011_DB_Inicial.Designer.cs">
+      <DependentUpon>201605042311011_DB_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,14 +87,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604292313547_Inicial.resx">
-      <DependentUpon>201604292313547_Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605022109392_addClienteDataNascimento.resx">
-      <DependentUpon>201605022109392_addClienteDataNascimento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605022251461_AlterClienteRamoOpcional.resx">
-      <DependentUpon>201605022251461_AlterClienteRamoOpcional.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605042311011_DB_Inicial.resx">
+      <DependentUpon>201605042311011_DB_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

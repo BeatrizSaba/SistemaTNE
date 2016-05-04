@@ -24,19 +24,14 @@ namespace DominioModel.Entidades
 
         public DateTime DataModificacao { get; set; }
 
-        [Required]
-        [StringLength(70)]
         public string Nome { get; set; }
 
-        [Required]
         public DateTime DataNascimento { get; set; }
 
         public TipoPessoa TipoPessoa { get; set; }
 
         public EstadoCliente Estado { get; set; }
 
-        [Required]
-        [StringLength(20)]
         public string Residencia { get; set; }
 
         public int EnderecoID { get; set; }

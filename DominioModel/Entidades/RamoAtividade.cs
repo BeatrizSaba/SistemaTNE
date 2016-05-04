@@ -8,8 +8,6 @@ namespace DominioModel.Entidades
     {
         public int RamoAtividadeID { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string Descricao { get; set; }
 
 

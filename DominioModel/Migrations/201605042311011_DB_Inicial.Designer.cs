@@ -7,13 +7,13 @@ namespace DominioModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addClienteDataNascimento : IMigrationMetadata
+    public sealed partial class DB_Inicial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addClienteDataNascimento));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DB_Inicial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605022109392_addClienteDataNascimento"; }
+            get { return "201605042311011_DB_Inicial"; }
         }
         
         string IMigrationMetadata.Source

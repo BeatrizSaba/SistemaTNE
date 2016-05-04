@@ -11,12 +11,10 @@ namespace DominioModel.Entidades
 
         public DateTime DataModificacao { get; set; }
 
-
         public EstadoCliente EstadoAnterior { get; set; }
 
         public EstadoCliente EstadoNovo { get; set; }
 
-        [StringLength(200)]
         public string Observacao { get; set; }
 
         public virtual Cliente Clientes { get; set; }

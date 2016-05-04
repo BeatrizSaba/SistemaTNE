@@ -14,62 +14,66 @@ namespace SistemaTNE.Models
     {
         public int ClienteID { get; set; }
 
-        [Required]
-        [StringLength(70)]
+        [Required (ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(70, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string Nome { get; set; }
 
         [Display(Name = "Data de nascimento")]
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public DateTime DataNascimento { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Tipo de pessoa")]
         public TipoPessoa TipoPessoa { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Estado")]
         public EstadoCliente Estado { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Frequência que vai ao posto")]
         public FrequenciaCompra FrequenciaVisitaPosto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Forma de pagamento mais utilizada")]
         public FormaPagamento FormaPagamentoUsada { get; set; }
 
-        [Display(Name = "Ramo de atividade")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string RamoAtividadeID { get; set; }
 
-        [Required]
-        [StringLength(20)]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(20, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         [Display(Name = "Número/Complemento")]
         public string Residencia { get; set; }
 
-        //[Required]
-        //public int EnderecoID { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(8, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string CEP { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(60, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string Logradouro { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(50, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string Bairro { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(50, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string Cidade { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(50, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string UF { get; set; }
 
 
         [Display(Name = "Modelo do veículo")]
+        [StringLength(20, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string ModeloVeiculo { get; set; }
 
 
         [Display(Name = "Placa")]
+        [StringLength(7, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string PlacaVeiculo { get; set; }
 
         public string Contatos { get; set; }

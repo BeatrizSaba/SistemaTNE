@@ -14,7 +14,6 @@ namespace DominioModel.Entidades
 
         public int BairroID { get; set; }
 
-        [StringLength(50)]
         public string Nome { get; set; }
 
         public int CidadeID { get; set; }

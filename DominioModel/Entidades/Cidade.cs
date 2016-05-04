@@ -15,8 +15,6 @@ namespace DominioModel.Entidades
 
         public int CidadeID { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string Nome { get; set; }
 
         public int UFID { get; set; }

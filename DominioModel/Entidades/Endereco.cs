@@ -14,12 +14,8 @@ namespace DominioModel.Entidades
 
         public int EnderecoID { get; set; }
 
-        [Required]
-        [StringLength(8)]
         public string CEP { get; set; }
 
-        [Required]
-        [StringLength(60)]
         public string Logradouro { get; set; }
 
         public int BairroID { get; set; }
