@@ -80,6 +80,12 @@ namespace DominioModel.Repositorio.Concreto
 
             endereco.Bairros.Cidades = endereco.Cidades;
 
+            endereco.Bairros.Enderecos = null;
+            endereco.Cidades.Bairros = null;              
+            endereco.Cidades.Enderecos = null;
+            endereco.UFs.Cidades = null;
+            endereco.Cidades.UFs.Enderecos = null;
+
             return endereco;
         }
 

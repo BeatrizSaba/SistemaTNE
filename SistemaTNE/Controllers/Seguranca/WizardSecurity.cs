@@ -25,7 +25,7 @@ namespace SistemaTNE.Controllers.Seguranca
                      1,
                      serializeModel.UsuarioID.ToString(),
                      DateTime.Now,
-                     DateTime.Now.AddMinutes(15),
+                     DateTime.Now.AddMinutes(1),
                      false,
                      userData);
 

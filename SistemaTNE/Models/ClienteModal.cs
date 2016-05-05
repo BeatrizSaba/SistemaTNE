@@ -20,6 +20,7 @@ namespace SistemaTNE.Models
 
         [Display(Name = "Data de nascimento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Range(typeof(DateTime), "01/01/1753", "31/12/9999", ErrorMessage = "O campo {0} não pode ser preenchido com esta data")]
         public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

@@ -298,6 +298,9 @@ function PostClienteSuccess(data, status, xhr) {
 
     if (data.Status === 'OK') {
 
+        LimparCampos('tabNovoEditarCliente');
+        $('#tblClienteContatos').bootstrapTable('removeAll');
+
         AtivarPartialViewListaClientes(function () {
             AtivarAlert('success', data.Mensagem, 'listaClientesAlerta');
         });
