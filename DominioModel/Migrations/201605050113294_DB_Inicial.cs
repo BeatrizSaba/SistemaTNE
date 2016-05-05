@@ -33,18 +33,12 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         CidadeID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50,
-                            annotations: new Dictionary<string, AnnotationValues>
-                            {
-                                { 
-                                    "index",
-                                    new AnnotationValues(oldValue: null, newValue: "IndexAnnotation: { Name: UNQ_CIDADE_NOME, IsUnique: True }")
-                                },
-                            }),
+                        Nome = c.String(maxLength: 50),
                         UFID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CidadeID)
                 .ForeignKey("dbo.Estados", t => t.UFID)
+                .Index(t => t.Nome, unique: true, name: "UNQ_CIDADE_NOME")
                 .Index(t => t.UFID);
             
             CreateTable(
@@ -52,14 +46,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         EnderecoID = c.Int(nullable: false, identity: true),
-                        CEP = c.String(maxLength: 8, fixedLength: true, unicode: false,
-                            annotations: new Dictionary<string, AnnotationValues>
-                            {
-                                { 
-                                    "index",
-                                    new AnnotationValues(oldValue: null, newValue: "IndexAnnotation: { Name: UNQ_CEP, IsUnique: True }")
-                                },
-                            }),
+                        CEP = c.String(maxLength: 8, fixedLength: true, unicode: false),
                         Logradouro = c.String(maxLength: 60),
                         BairroID = c.Int(nullable: false),
                         CidadeID = c.Int(nullable: false),
@@ -69,6 +56,7 @@ namespace DominioModel.Migrations
                 .ForeignKey("dbo.Estados", t => t.UFID)
                 .ForeignKey("dbo.Cidades", t => t.CidadeID)
                 .ForeignKey("dbo.Bairros", t => t.BairroID)
+                .Index(t => t.CEP, unique: true, name: "UNQ_CEP")
                 .Index(t => t.BairroID)
                 .Index(t => t.CidadeID)
                 .Index(t => t.UFID);
@@ -177,36 +165,24 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         UFID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50,
-                            annotations: new Dictionary<string, AnnotationValues>
-                            {
-                                { 
-                                    "index",
-                                    new AnnotationValues(oldValue: null, newValue: "IndexAnnotation: { Name: UNQ_UF_NOME, IsUnique: True }")
-                                },
-                            }),
+                        Nome = c.String(maxLength: 50),
                     })
-                .PrimaryKey(t => t.UFID);
+                .PrimaryKey(t => t.UFID)
+                .Index(t => t.Nome, unique: true, name: "UNQ_UF_NOME");
             
             CreateTable(
                 "dbo.Usuarios",
                 c => new
                     {
                         UsuarioID = c.Int(nullable: false, identity: true),
-                        Login = c.String(maxLength: 30,
-                            annotations: new Dictionary<string, AnnotationValues>
-                            {
-                                { 
-                                    "index",
-                                    new AnnotationValues(oldValue: null, newValue: "IndexAnnotation: { Name: UNQ_LOGIN, IsUnique: True }")
-                                },
-                            }),
+                        Login = c.String(maxLength: 30),
                         Senha = c.String(maxLength: 30),
                         Nome = c.String(),
                         Papel = c.Int(nullable: false),
                         Bloqueado = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.UsuarioID);
+                .PrimaryKey(t => t.UsuarioID)
+                .Index(t => t.Login, unique: true, name: "UNQ_LOGIN");
             
             CreateTable(
                 "dbo.ClientesMarcasPreferidas",
@@ -273,6 +249,8 @@ namespace DominioModel.Migrations
             DropIndex("dbo.ClientesPostosFavoritos", new[] { "ClienteID" });
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "MarcaID" });
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "ClienteID" });
+            DropIndex("dbo.Usuarios", "UNQ_LOGIN");
+            DropIndex("dbo.Estados", "UNQ_UF_NOME");
             DropIndex("dbo.Veiculos", new[] { "ClienteID" });
             DropIndex("dbo.MudancaEstadoClientes", new[] { "ClienteID" });
             DropIndex("dbo.Contatos", new[] { "ClienteID" });
@@ -281,33 +259,15 @@ namespace DominioModel.Migrations
             DropIndex("dbo.Enderecos", new[] { "UFID" });
             DropIndex("dbo.Enderecos", new[] { "CidadeID" });
             DropIndex("dbo.Enderecos", new[] { "BairroID" });
+            DropIndex("dbo.Enderecos", "UNQ_CEP");
             DropIndex("dbo.Cidades", new[] { "UFID" });
+            DropIndex("dbo.Cidades", "UNQ_CIDADE_NOME");
             DropIndex("dbo.Bairros", new[] { "CidadeID" });
             DropTable("dbo.ClientesServicosUtilizados");
             DropTable("dbo.ClientesPostosFavoritos");
             DropTable("dbo.ClientesMarcasPreferidas");
-            DropTable("dbo.Usuarios",
-                removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>
-                {
-                    {
-                        "Login",
-                        new Dictionary<string, object>
-                        {
-                            { "index", "IndexAnnotation: { Name: UNQ_LOGIN, IsUnique: True }" },
-                        }
-                    },
-                });
-            DropTable("dbo.Estados",
-                removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>
-                {
-                    {
-                        "Nome",
-                        new Dictionary<string, object>
-                        {
-                            { "index", "IndexAnnotation: { Name: UNQ_UF_NOME, IsUnique: True }" },
-                        }
-                    },
-                });
+            DropTable("dbo.Usuarios");
+            DropTable("dbo.Estados");
             DropTable("dbo.Veiculos");
             DropTable("dbo.servicos");
             DropTable("dbo.RamosAtividade");
@@ -316,28 +276,8 @@ namespace DominioModel.Migrations
             DropTable("dbo.Marcas");
             DropTable("dbo.Contatos");
             DropTable("dbo.Clientes");
-            DropTable("dbo.Enderecos",
-                removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>
-                {
-                    {
-                        "CEP",
-                        new Dictionary<string, object>
-                        {
-                            { "index", "IndexAnnotation: { Name: UNQ_CEP, IsUnique: True }" },
-                        }
-                    },
-                });
-            DropTable("dbo.Cidades",
-                removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>
-                {
-                    {
-                        "Nome",
-                        new Dictionary<string, object>
-                        {
-                            { "index", "IndexAnnotation: { Name: UNQ_CIDADE_NOME, IsUnique: True }" },
-                        }
-                    },
-                });
+            DropTable("dbo.Enderecos");
+            DropTable("dbo.Cidades");
             DropTable("dbo.Bairros",
                 removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>
                 {

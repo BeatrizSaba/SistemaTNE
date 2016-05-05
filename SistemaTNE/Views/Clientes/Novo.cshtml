@@ -50,7 +50,7 @@
                         @Html.LabelFor(model => model.RamoAtividadeID, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.DropDownList("ListaRamosAtividade", (IList<SelectListItem>)ViewBag.RamosAtividade, 
-                           new { @Class = "form-control", @Style = "width: 100%" })
+                           new { @Class = "form-control select2-single", @Style = "width: 100%" })
                         </div>
                     </div>
                 }

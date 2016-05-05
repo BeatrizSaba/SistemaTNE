@@ -204,7 +204,7 @@ namespace DominioModel.Repositorio
             modelBuilder.Entity<Usuario>().Property(e => e.Login).HasMaxLength(30);
             modelBuilder.Entity<Usuario>().Property(e => e.Senha).HasMaxLength(30);
             modelBuilder.Entity<Usuario>().Property(e => e.Login)
-                .HasColumnAnnotation("index", new IndexAnnotation(new IndexAttribute("UNQ_LOGIN")
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UNQ_LOGIN")
                 {
                     IsUnique = true
                 }));
@@ -271,7 +271,7 @@ namespace DominioModel.Repositorio
                 .WillCascadeOnDelete(false);
 
 
-            modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasColumnAnnotation("index",
+            modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasColumnAnnotation("Index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_CIDADE_NOME") { IsUnique = true }));
 
@@ -314,14 +314,14 @@ namespace DominioModel.Repositorio
                 .Property(e => e.CEP)
                 .IsFixedLength()
                 .IsUnicode(false)
-                .HasColumnAnnotation("index", new IndexAnnotation(new IndexAttribute("UNQ_CEP") { IsUnique = true }));
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UNQ_CEP") { IsUnique = true }));
 
             modelBuilder.Entity<Endereco>()
                 .HasMany(e => e.Clientes)
                 .WithRequired(e => e.Enderecos)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("index",
+            modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("Index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_UF_NOME") { IsUnique = true}));
 

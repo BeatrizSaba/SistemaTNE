@@ -8,12 +8,14 @@
 
             ConfigurarTabelaClienteContatos();
 
+            $('#ListaRamosAtividade').val(0).trigger('change');
+
             $('#btnSalvarCliente').on('click', function (e) {
          
-                getSelectValue('RamoAtividadeID', 'listRamosAtividade');
-                getMultSelectValues('Postos', 'listPostos');
-                getMultSelectValues('Marcas', 'listMarcas');
-                getMultSelectValues('Servicos', 'listServicos');
+                getSelectValue('RamoAtividadeID', 'ListaRamosAtividade');
+                getMultSelectValues('Postos', 'ListaPostos');
+                getMultSelectValues('Marcas', 'ListaMarcas');
+                getMultSelectValues('Servicos', 'ListaServicos');
                 getContatos();
 
                 AtivarSpin();
@@ -129,10 +131,10 @@ function AtivarPartialViewListaClientes(onShow) {
 
 function ConfigurarDadosInvisiveisCliente() {
 
-    setDefaultSelect('RamoAtividadeID', 'listRamosAtividade');
-    setDefaultMultSelect('Postos', 'listPostos');
-    setDefaultMultSelect('Marcas', 'listMarcas');
-    setDefaultMultSelect('Servicos', 'listServicos');
+    setDefaultSelect('RamoAtividadeID', 'ListaRamosAtividade');
+    setDefaultMultSelect('Postos', 'ListaPostos');
+    setDefaultMultSelect('Marcas', 'ListaMarcas');
+    setDefaultMultSelect('Servicos', 'ListaServicos');
 }
 
 function ConfigurarTabelaClienteContatos(contatos)
@@ -265,7 +267,7 @@ function getSelectValue(inputSorce, select) {
     
     if ((arrayValues != null) && (arrayValues.length != 0)) {
 
-        var value = $('#' + select).val()[0];
+        var value = $('#' + select).val();
 
         if (value != null)
             $('#' + inputSorce).val(value);

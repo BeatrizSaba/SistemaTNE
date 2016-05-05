@@ -43,14 +43,24 @@ namespace DominioModel.Repositorio.Concreto
             return (userAuth);
         }
 
-        public void BloquearUsuario(int id, bool bloqueado)
-        {
+        public void BloquearUsuario(int id, bool bloquear)
+        {           
             var usuario = RetornarPorID(id);
+
+            if (bloquear && (usuario.Papel == PapelUsuario.Administrador))
+            {
+                int adminCount = (from usr in Usuarios
+                                  where usr.Papel == PapelUsuario.Administrador
+                                  select usr).ToList().Count;
+                 
+                if (adminCount == 1)         
+                    throw new Exception("Não é possível bloquear o único usuário do sistema.");
+            }
 
             if (usuario == null)
                 throw new Exception("Usuário não existe");
 
-            usuario.Bloqueado = bloqueado;
+            usuario.Bloqueado = bloquear;
             context.Entry(usuario).Property(u => u.Bloqueado).IsModified = true;
             context.SaveChanges();
         }

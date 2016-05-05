@@ -42,10 +42,12 @@ namespace DominioModel.Repositorio.Concreto
             if (endereco != null)
             {
                 if (!EnderecoIguais(endereco, cliente.Enderecos))
-                    throw new Exception("Eexiste um endereço diferente cadastrado com este CEP.");                           
-            }
+                    throw new Exception("Eexiste um endereço diferente cadastrado com este CEP.");
 
-            cliente.Enderecos = BuscarComplementosEndereco(cliente.Enderecos);
+                cliente.Enderecos = endereco;                          
+            }
+            else
+                cliente.Enderecos = BuscarComplementosEndereco(cliente.Enderecos);
 
             context.Clientes.Add(cliente);
             context.SaveChanges();

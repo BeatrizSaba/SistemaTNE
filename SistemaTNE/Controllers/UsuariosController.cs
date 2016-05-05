@@ -126,17 +126,27 @@ namespace SistemaTNE.Controllers
                 if (id.HasValue)
                 {
                     var usuario = userRep.RetornarPorID(id.GetValueOrDefault());
+                    var bloquear = !usuario.Bloqueado;
 
                     if (usuario != null)
                     {
-                        userRep.BloquearUsuario(usuario.UsuarioID, !usuario.Bloqueado);
+                        if (bloquear && (usuario.Papel == PapelUsuario.Administrador))
+                        {
+                            int adminCount = (from usr in userRep.Usuarios
+                                              where usr.Papel == PapelUsuario.Administrador
+                                              select usr).ToList().Count;
+
+                            if (adminCount == 1)
+                                return Json(RespostaRequisicao.SimpleError("Não é possível bloquear a única conta de administrador dispónivel."));
+                        }
+                        userRep.BloquearUsuario(usuario.UsuarioID, bloquear);
 
                         string msg;
 
                         if (usuario.Bloqueado)
-                            msg = "Usuário desbloqueado.";
+                            msg = "Usuário bloqueado.";
                         else
-                            msg = "Usuario bloqueado.";
+                            msg = "Usuario desbloqueado.";
 
 
                         return Json(RespostaRequisicao.SimpleText(msg));
