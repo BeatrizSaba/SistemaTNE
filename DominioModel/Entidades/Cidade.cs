@@ -22,7 +22,7 @@ namespace DominioModel.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bairro> Bairros { get; set; }
 
-        public virtual UF UFs { get; set; }
+        public virtual UF UF { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Endereco> Enderecos { get; set; }

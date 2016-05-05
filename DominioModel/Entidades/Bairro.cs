@@ -18,7 +18,7 @@ namespace DominioModel.Entidades
 
         public int CidadeID { get; set; }
 
-        public virtual Cidade Cidades { get; set; }
+        public virtual Cidade Cidade { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Endereco> Enderecos { get; set; }

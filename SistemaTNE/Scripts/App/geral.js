@@ -182,10 +182,7 @@ function TabAtiva(tab)
 
 function LimparCampos(container)
 {
-    var a = $('input[type="text"]', '#' + container);
-    var b = $('select', '#' + container);
-
-    $('input[type="text"],input[type="datetime"]', '#' + container).val('');
+    $('input[type="text"],input[type="datetime"],input[type="password"]', '#' + container).val('');
     $('select:not([multiple="multiple"])', '#' + container).val(0).trigger("change");
     $('select[multiple="multiple"]', '#' + container).val(null).trigger("change");
 

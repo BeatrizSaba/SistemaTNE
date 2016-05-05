@@ -24,13 +24,13 @@ namespace DominioModel.Entidades
 
         public int UFID { get; set; }
 
-        public virtual Bairro Bairros { get; set; }
+        public virtual Bairro Bairro { get; set; }
 
-        public virtual Cidade Cidades { get; set; }
+        public virtual Cidade Cidade { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Clientes { get; set; }
 
-        public virtual UF UFs { get; set; }
+        public virtual UF UF { get; set; }
     }
 }

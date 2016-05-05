@@ -17,6 +17,6 @@ namespace DominioModel.Entidades
 
         public string Observacao { get; set; }
 
-        public virtual Cliente Clientes { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

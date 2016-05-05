@@ -76,11 +76,11 @@ namespace SistemaTNE.Models
                     FrequenciaVisitaPosto = cl.FrequenciaVisitaPosto == FrequenciaCompra.Nulo ? null : cl.FrequenciaVisitaPosto.GetAttributeOfType<DisplayAttribute>().Name,
                     TipoPessoa = cl.TipoPessoa.GetAttributeOfType<DisplayAttribute>().Name,
                     Residencia = cl.Residencia,
-                    CEP = cl.Enderecos.CEP,
-                    Logradouro = cl.Enderecos.Logradouro,
-                    Bairro = cl.Enderecos.Bairros.Nome,
-                    Cidade = cl.Enderecos.Cidades.Nome,
-                    UF = cl.Enderecos.UFs.Nome,
+                    CEP = cl.Endereco.CEP,
+                    Logradouro = cl.Endereco.Logradouro,
+                    Bairro = cl.Endereco.Bairro.Nome,
+                    Cidade = cl.Endereco.Cidade.Nome,
+                    UF = cl.Endereco.UF.Nome,
                     Estado = cl.Estado.GetAttributeOfType<DisplayAttribute>().Name,
                 };
 

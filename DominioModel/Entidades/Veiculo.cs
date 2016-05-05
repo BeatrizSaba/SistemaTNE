@@ -13,6 +13,6 @@ namespace DominioModel.Entidades
 
         public string Placa { get; set; }
 
-        public virtual Cliente Clientes { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

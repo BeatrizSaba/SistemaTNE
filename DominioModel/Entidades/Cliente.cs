@@ -44,7 +44,7 @@ namespace DominioModel.Entidades
 
         public virtual RamoAtividade RamoAtividade { get; set; }
 
-        public virtual Endereco Enderecos { get; set; }
+        public virtual Endereco Endereco { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contato> Contatos { get; set; }

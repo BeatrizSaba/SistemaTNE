@@ -116,11 +116,11 @@ namespace SistemaTNE.Models
             Endereco end = new Endereco();
             end.Logradouro = this.Logradouro;
             end.CEP = this.CEP;
-            end.Bairros = bai;
-            end.Cidades = cid;
-            end.UFs = uf;
+            end.Bairro = bai;
+            end.Cidade = cid;
+            end.UF = uf;
 
-            cliente.Enderecos = end;
+            cliente.Endereco = end;
 
             try
             {

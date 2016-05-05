@@ -36,18 +36,18 @@ namespace DominioModel.Repositorio.Concreto
             cliente.DataModificacao = DateTime.Now;
 
             var endereco = (from end in context.Enderecos
-                           where (end.CEP.Equals(cliente.Enderecos.CEP))
+                           where (end.CEP.Equals(cliente.Endereco.CEP))
                            select end).SingleOrDefault();
 
             if (endereco != null)
             {
-                if (!EnderecoIguais(endereco, cliente.Enderecos))
+                if (!EnderecoIguais(endereco, cliente.Endereco))
                     throw new Exception("Eexiste um endereço diferente cadastrado com este CEP.");
 
-                cliente.Enderecos = endereco;                          
+                cliente.Endereco = endereco;                          
             }
             else
-                cliente.Enderecos = BuscarComplementosEndereco(cliente.Enderecos);
+                cliente.Endereco = BuscarComplementosEndereco(cliente.Endereco);
 
             context.Clientes.Add(cliente);
             context.SaveChanges();
@@ -55,36 +55,36 @@ namespace DominioModel.Repositorio.Concreto
 
         private Endereco BuscarComplementosEndereco(Endereco endereco)
         {
-            var uf = context.UFs.Where(e => e.Nome.Equals(endereco.UFs.Nome)).SingleOrDefault();
+            var uf = context.UFs.Where(e => e.Nome.Equals(endereco.UF.Nome)).SingleOrDefault();
 
             if (uf != null)
             {
-                endereco.UFs = uf;
+                endereco.UF = uf;
             }
 
-            var cidade = context.Cidades.Where(e => e.Nome.Equals(endereco.Cidades.Nome)).SingleOrDefault();
+            var cidade = context.Cidades.Where(e => e.Nome.Equals(endereco.Cidade.Nome)).SingleOrDefault();
 
             if (cidade != null)
             {
-                endereco.Cidades = cidade;
+                endereco.Cidade = cidade;
             }
 
-            endereco.Cidades.UFs = endereco.UFs;
+            endereco.Cidade.UF = endereco.UF;
 
-            var bairro = context.Bairros.Where(e => e.Nome.Equals(endereco.Bairros.Nome)).SingleOrDefault();
+            var bairro = context.Bairros.Where(e => e.Nome.Equals(endereco.Bairro.Nome)).SingleOrDefault();
 
             if (bairro != null)
             {
-                endereco.Bairros = bairro;
+                endereco.Bairro = bairro;
             }
 
-            endereco.Bairros.Cidades = endereco.Cidades;
+            endereco.Bairro.Cidade = endereco.Cidade;
 
-            endereco.Bairros.Enderecos = null;
-            endereco.Cidades.Bairros = null;              
-            endereco.Cidades.Enderecos = null;
-            endereco.UFs.Cidades = null;
-            endereco.Cidades.UFs.Enderecos = null;
+            endereco.Bairro.Enderecos = null;
+            endereco.Cidade.Bairros = null;              
+            endereco.Cidade.Enderecos = null;
+            endereco.UF.Cidades = null;
+            endereco.Cidade.UF.Enderecos = null;
 
             return endereco;
         }
@@ -94,9 +94,9 @@ namespace DominioModel.Repositorio.Concreto
             return (
                 end1.CEP.Equals(end2.CEP) &&
                 end1.Logradouro.Equals(end2.Logradouro) &&
-                end1.Bairros.Nome.Equals(end2.Bairros.Nome) &&
-                end1.Cidades.Nome.Equals(end2.Cidades.Nome) &&
-                end1.UFs.Nome.Equals(end2.UFs.Nome)
+                end1.Bairro.Nome.Equals(end2.Bairro.Nome) &&
+                end1.Cidade.Nome.Equals(end2.Cidade.Nome) &&
+                end1.UF.Nome.Equals(end2.UF.Nome)
                 );
         }
 

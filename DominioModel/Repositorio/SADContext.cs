@@ -267,7 +267,7 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<Bairro>()
                 .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.Bairros)
+                .WithRequired(e => e.Bairro)
                 .WillCascadeOnDelete(false);
 
 
@@ -277,22 +277,22 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<Cidade>()
                 .HasMany(e => e.Bairros)
-                .WithRequired(e => e.Cidades)
+                .WithRequired(e => e.Cidade)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cidade>()
                 .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.Cidades)
+                .WithRequired(e => e.Cidade)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cliente>()
                 .HasMany(e => e.Contatos)
-                .WithRequired(e => e.Clientes)
+                .WithRequired(e => e.Cliente)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cliente>()
                 .HasMany(e => e.Veiculos)
-                .WithRequired(e => e.Clientes)
+                .WithRequired(e => e.Cliente)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cliente>()
@@ -318,7 +318,7 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<Endereco>()
                 .HasMany(e => e.Clientes)
-                .WithRequired(e => e.Enderecos)
+                .WithRequired(e => e.Endereco)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("Index",
@@ -327,12 +327,12 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<UF>()
                 .HasMany(e => e.Cidades)
-                .WithRequired(e => e.UFs)
+                .WithRequired(e => e.UF)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UF>()
                 .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.UFs)
+                .WithRequired(e => e.UF)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Veiculo>()
