@@ -49,7 +49,7 @@ namespace SistemaTNE.Controllers
 
                     //Check login está sendo usado
                     var result = from urs in userRep.Usuarios
-                                 where urs.Login.Equals(model.Login)
+                                 where urs.Login.ToLower().Equals(model.Login.ToLower())
                                  select urs;
 
                     if (result.ToList().Count > 0)

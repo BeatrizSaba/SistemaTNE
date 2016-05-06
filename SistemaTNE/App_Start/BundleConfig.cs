@@ -54,7 +54,8 @@ namespace SistemaTNE
                 "~/Scripts/chart.min.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js",
                 "~/Scripts/bootstrap-dialog.js",
-                "~/Scripts/bsModelCustom.js"
+                "~/Scripts/bsModelCustom.js",
+                "~/Scripts/jquery.inputmask.bundle.js"
                 ));
         }
     }

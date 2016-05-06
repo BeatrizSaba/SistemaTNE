@@ -29,6 +29,7 @@
                 bodyModal: string,      [Obrigatório]
                 onOK: function,
                 onCancel: function,
+                onShow: function,
                 modelOptions: object,
                 btnOKLabel: string,
                 btnCancelLabel
@@ -50,6 +51,11 @@ function ModelShow(options) {
         if ((options.onCancel != undefined) && (options.onCancel != null))
             options.onCancel(e);
     });
+
+    if ((options.onShow != undefined) && (options.onShow != null)) {
+        $('#bsModelCustom').off('show.bs.modal');
+        $('#bsModelCustom').on('show.bs.modal', options.onShow);
+    }
 
     $('.modal-body').empty().html(options.bodyModel);
 

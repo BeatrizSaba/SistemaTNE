@@ -49,6 +49,7 @@ namespace SistemaTNE.Models
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(8, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
+        [MinLength(8, ErrorMessage = "O Campo {0} está incompleto")]
         public string CEP { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -75,6 +76,7 @@ namespace SistemaTNE.Models
 
         [Display(Name = "Placa")]
         [StringLength(7, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
+        [MinLength(7, ErrorMessage = "O Campo {0} está incompleto")]
         public string PlacaVeiculo { get; set; }
 
         public string Contatos { get; set; }

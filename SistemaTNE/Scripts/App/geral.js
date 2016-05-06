@@ -192,3 +192,25 @@ function LimparCampos(container)
     $('.select-mult', '#' + container).val(null).trigger("change");
     */
 }
+
+
+// ---------------- CONSULTA DE CEP -------------------------
+
+function APICEP() { };
+
+APICEP.Consultar = function (dados, encontrou) {
+
+    $.ajax({
+        url: 'https://viacep.com.br/ws/' + dados.cep + '/json/',
+        dataType: 'json',
+        success: function (end) {
+            
+            if ((dados.success != undefined) && (dados.success != null)) {
+                encontrou = !("erro" in end);
+                dados.success(end, encontrou);
+            }
+        },
+        error: dados.error,
+        complete: dados.complete
+    });
+};
