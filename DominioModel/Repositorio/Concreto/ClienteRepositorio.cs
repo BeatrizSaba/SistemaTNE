@@ -69,7 +69,6 @@ namespace DominioModel.Repositorio.Concreto
                 endereco.Cidade = cidade;
             }
 
-            endereco.Cidade.UF = endereco.UF;
 
             var bairro = context.Bairros.Where(e => e.Nome.Equals(endereco.Bairro.Nome)).SingleOrDefault();
 
@@ -77,14 +76,6 @@ namespace DominioModel.Repositorio.Concreto
             {
                 endereco.Bairro = bairro;
             }
-
-            endereco.Bairro.Cidade = endereco.Cidade;
-
-            endereco.Bairro.Enderecos = null;
-            endereco.Cidade.Bairros = null;              
-            endereco.Cidade.Enderecos = null;
-            endereco.UF.Cidades = null;
-            endereco.Cidade.UF.Enderecos = null;
 
             return endereco;
         }

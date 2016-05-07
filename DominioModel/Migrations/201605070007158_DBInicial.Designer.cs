@@ -7,13 +7,13 @@ namespace DominioModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DB_Inicial : IMigrationMetadata
+    public sealed partial class DBInicial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DB_Inicial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DBInicial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605050113294_DB_Inicial"; }
+            get { return "201605070007158_DBInicial"; }
         }
         
         string IMigrationMetadata.Source

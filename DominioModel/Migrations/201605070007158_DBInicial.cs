@@ -5,7 +5,7 @@ namespace DominioModel.Migrations
     using System.Data.Entity.Infrastructure.Annotations;
     using System.Data.Entity.Migrations;
     
-    public partial class DB_Inicial : DbMigration
+    public partial class DBInicial : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,7 @@ namespace DominioModel.Migrations
                 "dbo.Bairros",
                 c => new
                     {
-                        BairroID = c.Int(nullable: false, identity: true),
+                        BairroID = c.Int(nullable: false),
                         Nome = c.String(maxLength: 50,
                             annotations: new Dictionary<string, AnnotationValues>
                             {
@@ -22,44 +22,22 @@ namespace DominioModel.Migrations
                                     new AnnotationValues(oldValue: null, newValue: "IndexAnnotation: { Name: UNQ_BAIRRO_NOME, IsUnique: True }")
                                 },
                             }),
-                        CidadeID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.BairroID)
-                .ForeignKey("dbo.Cidades", t => t.CidadeID)
-                .Index(t => t.CidadeID);
+                .ForeignKey("dbo.Enderecos", t => t.BairroID)
+                .Index(t => t.BairroID);
             
             CreateTable(
                 "dbo.Cidades",
                 c => new
                     {
-                        CidadeID = c.Int(nullable: false, identity: true),
+                        CidadeID = c.Int(nullable: false),
                         Nome = c.String(maxLength: 50),
-                        UFID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CidadeID)
-                .ForeignKey("dbo.Estados", t => t.UFID)
-                .Index(t => t.Nome, unique: true, name: "UNQ_CIDADE_NOME")
-                .Index(t => t.UFID);
-            
-            CreateTable(
-                "dbo.Enderecos",
-                c => new
-                    {
-                        EnderecoID = c.Int(nullable: false, identity: true),
-                        CEP = c.String(maxLength: 8, fixedLength: true, unicode: false),
-                        Logradouro = c.String(maxLength: 60),
-                        BairroID = c.Int(nullable: false),
-                        CidadeID = c.Int(nullable: false),
-                        UFID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.EnderecoID)
-                .ForeignKey("dbo.Estados", t => t.UFID)
-                .ForeignKey("dbo.Cidades", t => t.CidadeID)
-                .ForeignKey("dbo.Bairros", t => t.BairroID)
-                .Index(t => t.CEP, unique: true, name: "UNQ_CEP")
-                .Index(t => t.BairroID)
+                .ForeignKey("dbo.Enderecos", t => t.CidadeID)
                 .Index(t => t.CidadeID)
-                .Index(t => t.UFID);
+                .Index(t => t.Nome, unique: true, name: "UNQ_CIDADE_NOME");
             
             CreateTable(
                 "dbo.Clientes",
@@ -79,8 +57,8 @@ namespace DominioModel.Migrations
                         RamoAtividadeID = c.Int(),
                     })
                 .PrimaryKey(t => t.ClienteID)
-                .ForeignKey("dbo.RamosAtividade", t => t.RamoAtividadeID)
                 .ForeignKey("dbo.Enderecos", t => t.EnderecoID)
+                .ForeignKey("dbo.RamosAtividade", t => t.RamoAtividadeID)
                 .Index(t => t.EnderecoID)
                 .Index(t => t.RamoAtividadeID);
             
@@ -96,6 +74,32 @@ namespace DominioModel.Migrations
                 .PrimaryKey(t => t.ContatoID)
                 .ForeignKey("dbo.Clientes", t => t.ClienteID)
                 .Index(t => t.ClienteID);
+            
+            CreateTable(
+                "dbo.Enderecos",
+                c => new
+                    {
+                        EnderecoID = c.Int(nullable: false, identity: true),
+                        CEP = c.String(maxLength: 8, fixedLength: true, unicode: false),
+                        Logradouro = c.String(maxLength: 60),
+                        BairroID = c.Int(nullable: false),
+                        CidadeID = c.Int(nullable: false),
+                        UFID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.EnderecoID)
+                .Index(t => t.CEP, unique: true, name: "UNQ_CEP");
+            
+            CreateTable(
+                "dbo.Estados",
+                c => new
+                    {
+                        UFID = c.Int(nullable: false),
+                        Nome = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.UFID)
+                .ForeignKey("dbo.Enderecos", t => t.UFID)
+                .Index(t => t.UFID)
+                .Index(t => t.Nome, unique: true, name: "UNQ_UF_NOME");
             
             CreateTable(
                 "dbo.Marcas",
@@ -161,16 +165,6 @@ namespace DominioModel.Migrations
                 .Index(t => t.ClienteID);
             
             CreateTable(
-                "dbo.Estados",
-                c => new
-                    {
-                        UFID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50),
-                    })
-                .PrimaryKey(t => t.UFID)
-                .Index(t => t.Nome, unique: true, name: "UNQ_UF_NOME");
-            
-            CreateTable(
                 "dbo.Usuarios",
                 c => new
                     {
@@ -227,11 +221,6 @@ namespace DominioModel.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Enderecos", "BairroID", "dbo.Bairros");
-            DropForeignKey("dbo.Enderecos", "CidadeID", "dbo.Cidades");
-            DropForeignKey("dbo.Enderecos", "UFID", "dbo.Estados");
-            DropForeignKey("dbo.Cidades", "UFID", "dbo.Estados");
-            DropForeignKey("dbo.Clientes", "EnderecoID", "dbo.Enderecos");
             DropForeignKey("dbo.Veiculos", "ClienteID", "dbo.Clientes");
             DropForeignKey("dbo.ClientesServicosUtilizados", "ServicoID", "dbo.servicos");
             DropForeignKey("dbo.ClientesServicosUtilizados", "ClienteID", "dbo.Clientes");
@@ -241,8 +230,11 @@ namespace DominioModel.Migrations
             DropForeignKey("dbo.MudancaEstadoClientes", "ClienteID", "dbo.Clientes");
             DropForeignKey("dbo.ClientesMarcasPreferidas", "MarcaID", "dbo.Marcas");
             DropForeignKey("dbo.ClientesMarcasPreferidas", "ClienteID", "dbo.Clientes");
+            DropForeignKey("dbo.Estados", "UFID", "dbo.Enderecos");
+            DropForeignKey("dbo.Clientes", "EnderecoID", "dbo.Enderecos");
+            DropForeignKey("dbo.Cidades", "CidadeID", "dbo.Enderecos");
+            DropForeignKey("dbo.Bairros", "BairroID", "dbo.Enderecos");
             DropForeignKey("dbo.Contatos", "ClienteID", "dbo.Clientes");
-            DropForeignKey("dbo.Bairros", "CidadeID", "dbo.Cidades");
             DropIndex("dbo.ClientesServicosUtilizados", new[] { "ServicoID" });
             DropIndex("dbo.ClientesServicosUtilizados", new[] { "ClienteID" });
             DropIndex("dbo.ClientesPostosFavoritos", new[] { "PostoID" });
@@ -250,33 +242,31 @@ namespace DominioModel.Migrations
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "MarcaID" });
             DropIndex("dbo.ClientesMarcasPreferidas", new[] { "ClienteID" });
             DropIndex("dbo.Usuarios", "UNQ_LOGIN");
-            DropIndex("dbo.Estados", "UNQ_UF_NOME");
             DropIndex("dbo.Veiculos", new[] { "ClienteID" });
             DropIndex("dbo.MudancaEstadoClientes", new[] { "ClienteID" });
+            DropIndex("dbo.Estados", "UNQ_UF_NOME");
+            DropIndex("dbo.Estados", new[] { "UFID" });
+            DropIndex("dbo.Enderecos", "UNQ_CEP");
             DropIndex("dbo.Contatos", new[] { "ClienteID" });
             DropIndex("dbo.Clientes", new[] { "RamoAtividadeID" });
             DropIndex("dbo.Clientes", new[] { "EnderecoID" });
-            DropIndex("dbo.Enderecos", new[] { "UFID" });
-            DropIndex("dbo.Enderecos", new[] { "CidadeID" });
-            DropIndex("dbo.Enderecos", new[] { "BairroID" });
-            DropIndex("dbo.Enderecos", "UNQ_CEP");
-            DropIndex("dbo.Cidades", new[] { "UFID" });
             DropIndex("dbo.Cidades", "UNQ_CIDADE_NOME");
-            DropIndex("dbo.Bairros", new[] { "CidadeID" });
+            DropIndex("dbo.Cidades", new[] { "CidadeID" });
+            DropIndex("dbo.Bairros", new[] { "BairroID" });
             DropTable("dbo.ClientesServicosUtilizados");
             DropTable("dbo.ClientesPostosFavoritos");
             DropTable("dbo.ClientesMarcasPreferidas");
             DropTable("dbo.Usuarios");
-            DropTable("dbo.Estados");
             DropTable("dbo.Veiculos");
             DropTable("dbo.servicos");
             DropTable("dbo.RamosAtividade");
             DropTable("dbo.Postos");
             DropTable("dbo.MudancaEstadoClientes");
             DropTable("dbo.Marcas");
+            DropTable("dbo.Estados");
+            DropTable("dbo.Enderecos");
             DropTable("dbo.Contatos");
             DropTable("dbo.Clientes");
-            DropTable("dbo.Enderecos");
             DropTable("dbo.Cidades");
             DropTable("dbo.Bairros",
                 removedColumnAnnotations: new Dictionary<string, IDictionary<string, object>>

@@ -109,11 +109,9 @@ namespace SistemaTNE.Models
 
             Cidade cid = new Cidade();
             cid.Nome = this.Cidade;
-            uf.Cidades.Add(cid);
 
             Bairro bai = new Bairro();
             bai.Nome = this.Bairro;
-            cid.Bairros.Add(bai);
 
             Endereco end = new Endereco();
             end.Logradouro = this.Logradouro;

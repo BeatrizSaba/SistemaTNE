@@ -265,25 +265,15 @@ namespace DominioModel.Repositorio
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_BAIRRO_NOME") { IsUnique = true }));
 
-            modelBuilder.Entity<Bairro>()
-                .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.Bairro)
-                .WillCascadeOnDelete(false);
-
 
             modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasColumnAnnotation("Index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_CIDADE_NOME") { IsUnique = true }));
 
-            modelBuilder.Entity<Cidade>()
-                .HasMany(e => e.Bairros)
-                .WithRequired(e => e.Cidade)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("Index",
+                new IndexAnnotation(
+                    new IndexAttribute("UNQ_UF_NOME") { IsUnique = true }));
 
-            modelBuilder.Entity<Cidade>()
-                .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.Cidade)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cliente>()
                 .HasMany(e => e.Contatos)
@@ -321,20 +311,19 @@ namespace DominioModel.Repositorio
                 .WithRequired(e => e.Endereco)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("Index",
-                new IndexAnnotation(
-                    new IndexAttribute("UNQ_UF_NOME") { IsUnique = true}));
+            modelBuilder.Entity<Endereco>()
+                .HasRequired(e => e.Bairro)
+                .WithRequiredPrincipal();
 
-            modelBuilder.Entity<UF>()
-                .HasMany(e => e.Cidades)
-                .WithRequired(e => e.UF)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Endereco>()
+                .HasRequired(e => e.Cidade)
+                .WithRequiredPrincipal();
 
-            modelBuilder.Entity<UF>()
-                .HasMany(e => e.Enderecos)
-                .WithRequired(e => e.UF)
-                .WillCascadeOnDelete(false);
-
+            modelBuilder.Entity<Endereco>()
+                .HasRequired(e => e.UF)
+                .WithRequiredPrincipal();
+                
+           
             modelBuilder.Entity<Veiculo>()
                 .Property(e => e.Placa)
                 .IsFixedLength()
