@@ -23,19 +23,27 @@ namespace DominioModel.Repositorio.Concreto
             }
         }
 
-        public void Alterar(Usuario usuario)
+        public void AlterarSenha(Usuario usuario)
         {
-            context.Entry(usuario).State = EntityState.Modified;
-            context.Entry(usuario).Property(u => u.Login).IsModified = false;
-            context.Entry(usuario).Property(u => u.Bloqueado).IsModified = false;
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+            context.Entry(usuario).State = EntityState.Unchanged;
+            context.Entry(usuario).Property(u => u.Senha).IsModified = true;
             context.SaveChanges();
         }
 
         public Usuario Autenticar(Usuario usuario)
         {
+            var userAuth = this.Todos()
+                .Where((usr) => 
+                usr.Login.Equals(usuario.Login) && 
+                BCrypt.Net.BCrypt.Verify(usuario.Senha, usr.Senha)
+                ).SingleOrDefault();
+
+            /*
             var userAuth = (from urs in Usuarios
-                            where urs.Login.Equals(usuario.Login) && urs.Senha.Equals(usuario.Senha)
+                            where urs.Login.Equals(usuario.Login) && BCrypt.Net.BCrypt.Verify(usuario.Senha, urs.Senha)
                             select urs).SingleOrDefault();
+                            */
 
             if ((userAuth != null) &&  (userAuth.Bloqueado))
                 throw new BloqueioException();
@@ -67,6 +75,7 @@ namespace DominioModel.Repositorio.Concreto
 
         public void Inserir(Usuario usuario)
         {
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             usuario.Bloqueado = false;
             context.Usuarios.Add(usuario);
             context.SaveChanges();
@@ -75,6 +84,7 @@ namespace DominioModel.Repositorio.Concreto
         public Usuario RetornarPorID(int id)
         {
             var usuario = context.Usuarios.Find(id);
+            usuario.Senha = null;
 
             return usuario;
         }

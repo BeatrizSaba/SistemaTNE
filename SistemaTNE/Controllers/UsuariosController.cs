@@ -196,7 +196,7 @@ namespace SistemaTNE.Controllers
                         {
                             usuario.Senha = model.NovaSenha;
 
-                            userRep.Alterar(usuario);
+                            userRep.AlterarSenha(usuario);
 
                             return Json(RespostaRequisicao.SimpleText("Senha alterada."));
                         }

@@ -170,7 +170,7 @@ namespace DominioModel.Migrations
                     {
                         UsuarioID = c.Int(nullable: false, identity: true),
                         Login = c.String(maxLength: 30),
-                        Senha = c.String(maxLength: 30),
+                        Senha = c.String(maxLength: 60),
                         Nome = c.String(),
                         Papel = c.Int(nullable: false),
                         Bloqueado = c.Boolean(nullable: false),

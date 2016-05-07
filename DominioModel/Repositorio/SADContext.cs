@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure.Annotations;
 using DominioModel.Entidades;
 using System.Linq;
 using System.Collections.Generic;
+using DominioModel.Repositorio.Abstrato;
+using DominioModel.Repositorio.Concreto;
 
 namespace DominioModel.Repositorio
 {
@@ -13,15 +15,7 @@ namespace DominioModel.Repositorio
     class SADContextInitializer : CreateDatabaseIfNotExists<SADContext>
     {
         protected override void Seed(SADContext context)
-        {
-            Usuario defaultAdmin = new Usuario()
-            {
-                Login = "SADAdmin",
-                Senha = "sadadmin2016",
-                Nome = "Administrador padrão",
-                Papel = PapelUsuario.Administrador
-            };
-
+        {         
             List<Posto> postos = new List<Posto>();
             postos.Add(new Posto() { Nome = "Belo Vale" });
             postos.Add(new Posto() { Nome = "Pérola" });
@@ -158,15 +152,29 @@ namespace DominioModel.Repositorio
             context.Servicos.AddRange(servicos);
             context.RamosAtividades.AddRange(ramosAtiv);
 
-            var admin = (from usr in context.Usuarios
-                        where usr.Login.Equals(defaultAdmin.Login)
-                        select usr).SingleOrDefault();
+            context.SaveChanges();
+
+
+            Usuario defaultAdmin = new Usuario()
+            {
+                Login = "SADAdmin",
+                Senha = "sadadmin2016",
+                Nome = "Administrador padrão",
+                Papel = PapelUsuario.Administrador
+            };
+        
+            IUsuariosRepositorio userRep = new UsuariosRepositorio(new SADContext());
+
+            var admin = (from usr in userRep.Usuarios
+                         where usr.Login.Equals(defaultAdmin.Login)
+                         select usr).SingleOrDefault();
+
 
             if (admin == null)
-                context.Usuarios.Add(defaultAdmin);
+                userRep.Inserir(defaultAdmin);
 
 
-            context.SaveChanges();
+            
 
             base.Seed(context);
         }
@@ -202,7 +210,7 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
             modelBuilder.Entity<Usuario>().Property(e => e.Login).HasMaxLength(30);
-            modelBuilder.Entity<Usuario>().Property(e => e.Senha).HasMaxLength(30);
+            modelBuilder.Entity<Usuario>().Property(e => e.Senha).HasMaxLength(60);
             modelBuilder.Entity<Usuario>().Property(e => e.Login)
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UNQ_LOGIN")
                 {

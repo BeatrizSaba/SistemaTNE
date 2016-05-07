@@ -11,7 +11,7 @@ namespace DominioModel.Repositorio.Abstrato
 
         void Inserir(Usuario usuario);
 
-        void Alterar(Usuario usuario);
+        void AlterarSenha(Usuario usuario);
 
         void BloquearUsuario(int id, bool bloqueado);
 

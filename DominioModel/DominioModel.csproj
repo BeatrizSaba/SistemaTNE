@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -67,9 +71,9 @@
     <Compile Include="Entidades\UF.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Veiculo.cs" />
-    <Compile Include="Migrations\201605070007158_DBInicial.cs" />
-    <Compile Include="Migrations\201605070007158_DBInicial.Designer.cs">
-      <DependentUpon>201605070007158_DBInicial.cs</DependentUpon>
+    <Compile Include="Migrations\201605072033227_DBInicial.cs" />
+    <Compile Include="Migrations\201605072033227_DBInicial.Designer.cs">
+      <DependentUpon>201605072033227_DBInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,8 +91,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605070007158_DBInicial.resx">
-      <DependentUpon>201605070007158_DBInicial.cs</DependentUpon>
+    <Content Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605072033227_DBInicial.resx">
+      <DependentUpon>201605072033227_DBInicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
