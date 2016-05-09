@@ -10,11 +10,11 @@ using System.Web.Script.Serialization;
 
 namespace SistemaTNE.Models
 {
-    public class ClienteModel
+    public class ClienteEditModel
     {
         public int ClienteID { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Required (ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(70, ErrorMessage = "O campo {0} não pode conter mais de que {1} caracteres")]
         public string Nome { get; set; }
 
@@ -26,10 +26,6 @@ namespace SistemaTNE.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Tipo de pessoa")]
         public TipoPessoa TipoPessoa { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [Display(Name = "Estado")]
-        public EstadoCliente Estado { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Frequência que vai ao posto")]
@@ -95,10 +91,10 @@ namespace SistemaTNE.Models
         {
             Cliente cliente = new Cliente()
             {
+                ClienteID = this.ClienteID,
                 Nome = this.Nome,
                 DataNascimento = this.DataNascimento,
                 TipoPessoa = this.TipoPessoa,
-                Estado = this.Estado,
                 FrequenciaVisitaPosto = this.FrequenciaVisitaPosto,
                 FormaPagamentoUsada = this.FormaPagamentoUsada,
                 Residencia = this.Residencia,
@@ -133,6 +129,7 @@ namespace SistemaTNE.Models
                     throw new EntidadeNaoExisteException("Ramo de atividade não encontrado");
 
                 cliente.RamoAtividade = ramoAtiv;
+                cliente.RamoAtividadeID = ramoAtiv.RamoAtividadeID;
             }
             catch (Exception e)
             {
@@ -203,6 +200,7 @@ namespace SistemaTNE.Models
                 {
                     cliente.Contatos.Add(new Contato()
                     {
+                        ContatoID = cont.ContatoID,
                         Nome = cont.Nome,
                         Telefone = cont.Telefone
                     });
@@ -212,5 +210,73 @@ namespace SistemaTNE.Models
             return cliente;
         }
 
+
+        public static ClienteEditModel From(Cliente cliente)
+        {
+            ClienteEditModel model = new ClienteEditModel()
+            {
+                ClienteID = cliente.ClienteID,
+                Nome = cliente.Nome,
+                DataNascimento = cliente.DataNascimento,
+                TipoPessoa = cliente.TipoPessoa,
+                FormaPagamentoUsada = cliente.FormaPagamentoUsada,
+                FrequenciaVisitaPosto = cliente.FrequenciaVisitaPosto,
+                Residencia = cliente.Residencia,
+                CEP = cliente.Endereco.CEP,
+                Logradouro = cliente.Endereco.Logradouro,
+                Bairro = cliente.Endereco.Bairro.Nome,
+                Cidade = cliente.Endereco.Cidade.Nome,
+                UF = cliente.Endereco.UF.Nome,
+                RamoAtividadeID = cliente.RamoAtividade != null ? cliente.RamoAtividade.RamoAtividadeID.ToString() : null
+            };
+
+            if ((cliente.Veiculos != null) && (cliente.Veiculos.Count > 0))
+            {
+                model.ModeloVeiculo = cliente.Veiculos.First().Modelo;
+                model.PlacaVeiculo =  cliente.Veiculos.First().Placa;
+            }
+
+            foreach(var serv in cliente.Servicos)
+            {
+                if (!String.IsNullOrEmpty(model.Servicos))
+                    model.Servicos += ",";
+
+                model.Servicos += serv.ServicoID;
+            }
+
+            foreach(var marc in cliente.Marcas)
+            {
+                if (!String.IsNullOrEmpty(model.Marcas))
+                    model.Marcas += ",";
+
+                model.Marcas += marc.MarcaID;
+            }
+
+            foreach(var post in cliente.Postos)
+            {
+                if (!String.IsNullOrEmpty(model.Postos))
+                    model.Postos += ",";
+
+                model.Postos += post.PostoID;
+            }
+
+            List<ContatoModel> contatModel = new List<ContatoModel>();
+
+            foreach (var contat in cliente.Contatos)
+            {
+                contatModel.Add(new ContatoModel()
+                {
+                    ContatoID = contat.ContatoID,
+                    Nome = contat.Nome,
+                    Telefone = contat.Telefone
+                });
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+
+            model.Contatos = json.Serialize(contatModel);
+
+            return model;
+        }
     }
 }

@@ -14,7 +14,8 @@ namespace SistemaTNE.Models
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "O Campo {0} é obrigátorio")]
-        [StringLength(14 , ErrorMessage = "O campo {0} não poder conter mais do que {1} caracteres")]
+        [StringLength(11 , ErrorMessage = "O campo {0} não poder conter mais do que {1} caracteres")]
+        [MinLength(10, ErrorMessage = "O Telefone informado não é válido.")]
         public string Telefone { get; set; }
     }
 }

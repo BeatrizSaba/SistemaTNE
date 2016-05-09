@@ -18,21 +18,24 @@ namespace SistemaTNE.Controllers
 {
     public class ClientesController : Controller
     {
+        SADContext context;
+        IClienteRepositorio clientRepo;
+
+
         public ClientesController()
         {
             context = new SADContext();
             clientRepo = new ClienteRepositorio(context);
         }
 
-        SADContext context;
-        IClienteRepositorio clientRepo;
-
         // GET: Cliente
+        /*
         [CustomAuthorize(Roles = "Administrador,Gestor,Frentista")]
         public ActionResult NovoEditar()
         {
             return PartialView();
         }
+        */
 
         [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Lista()
@@ -65,14 +68,15 @@ namespace SistemaTNE.Controllers
         }
 
         [HttpPost]
-        public ActionResult Novo(ClienteModal model)
+        public ActionResult Novo(ClienteModel model)
         {
             try
             {
 
                 if (!(Enum.GetValues(typeof(TipoPessoa)) as TipoPessoa[]).Contains(model.TipoPessoa))
                 {
-                    ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de poessoa");
+                    if (!ModelState.ContainsKey("TipoPessoa"))
+                        ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de pessoa");
                 }
 
                 if (!(Enum.GetValues(typeof(EstadoCliente)) as EstadoCliente[]).Contains(model.Estado))
@@ -99,6 +103,49 @@ namespace SistemaTNE.Controllers
         }
 
 
+        public ActionResult Editar(int? id)
+        {
+            if (id.HasValue)
+            {
+                var cliente = clientRepo.RetornarPorID(id.GetValueOrDefault());
+
+                if (cliente != null)
+                {
+                    CriarSelects();
+                    return PartialView(ClienteEditModel.From(cliente));
+                }
+                else
+                {
+                    return Json(RespostaRequisicao.SimpleError("Cliente não encontrado."));
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Editar(ClienteEditModel model)
+        {
+
+            if (!(Enum.GetValues(typeof(TipoPessoa)) as TipoPessoa[]).Contains(model.TipoPessoa))
+            {
+                if (!ModelState.ContainsKey("TipoPessoa"))
+                    ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de pessoa");
+            }
+
+            if (ModelState.IsValid)
+            {
+                clientRepo.Alterar(model.Parse(context));
+                return Json(RespostaRequisicao.SimpleText("Alterações realizas com sucesso."));
+            }
+            else
+            {
+                ModelState.AddModelError("Summary", "Corriga os erros abaixo antes de salvar.");
+                return Json(RespostaRequisicao.FromModelState(ModelState));
+            }
+        }
         public ActionResult Contato()
         {
             return PartialView();

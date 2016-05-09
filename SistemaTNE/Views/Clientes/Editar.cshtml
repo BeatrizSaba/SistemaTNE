@@ -1,25 +1,25 @@
-﻿@model SistemaTNE.Models.ClienteModel
+﻿@model SistemaTNE.Models.ClienteEditModel
 
-<div id="tabNovoEditarCliente" class="tab-pane fade">
-    @using (Ajax.BeginForm("Novo", "Clientes", new AjaxOptions() {
-        OnSuccess = "PostClienteSuccess",
-        OnFailure = "PostClienteError",
-        OnComplete = "PostClienteComplete" }))
+<div id="tabEditarCliente" class="tab-pane fade">
+    @using (Ajax.BeginForm("Editar", "Clientes", new AjaxOptions() {
+        OnSuccess = "PostClienteEditSuccess",
+        OnFailure = "PostClienteEditError",
+        OnComplete = "PostClienteEditComplete" }))
     {
-        <h2>Novo Cliente</h2>
+        <h2>Atualização de dados de Cliente</h2>
         <div class="validation-summary-valid text-danger" data-valmsg-for="Summary">       
         </div>
         <hr />       
         <ul class="nav nav-pills barraAcoes">
-            <li class="active"><a data-toggle="pill" href="#home0">Dados Pessoais</a></li>
-            <li><a data-toggle="pill" href="#menu10">Endereço</a></li>
-            <li><a data-toggle="pill" href="#menu30">Contato</a></li>
-            <li><a data-toggle="pill" href="#menu20">Outros</a></li>
+            <li class="active"><a data-toggle="pill" href="#home">Dados Pessoais</a></li>
+            <li><a data-toggle="pill" href="#menu1">Endereço</a></li>
+            <li><a data-toggle="pill" href="#menu3">Contato</a></li>
+            <li><a data-toggle="pill" href="#menu2">Outros</a></li>
         </ul>
 
         <div class="tab-content">
-
-            <div id="home0" class="tab-pane fade in active form-horizontal">
+            @Html.HiddenFor(m => m.ClienteID)
+            <div id="home" class="tab-pane fade in active form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -54,17 +54,10 @@
                         </div>
                     </div>
                 }
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.Estado, "Selecionar...", new { @Style = "width: 100%", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+            
             </div>
 
-            <div id="menu10" class="tab-pane fade form-horizontal">
+            <div id="menu1" class="tab-pane fade form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Residencia, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -118,7 +111,7 @@
                 </div>
             </div>
 
-            <div id="menu20" class="tab-pane fade form-horizontal">
+            <div id="menu2" class="tab-pane fade form-horizontal">
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.ModeloVeiculo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -204,7 +197,7 @@
                 </div>
             </div>
 
-            <div id="menu30" class="tab-pane fade form-horizontal">
+            <div id="menu3" class="tab-pane fade form-horizontal">
                 <div class="pull-left search btn-group btn-actions">
                     <button id="btnAddContato" class="btn btn-primary">Adicionar</button>
                     <button id="btnRemoveContato" class="btn btn-primary">Remover</button>

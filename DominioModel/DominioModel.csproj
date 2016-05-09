@@ -71,9 +71,9 @@
     <Compile Include="Entidades\UF.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Veiculo.cs" />
-    <Compile Include="Migrations\201605072033227_DBInicial.cs" />
-    <Compile Include="Migrations\201605072033227_DBInicial.Designer.cs">
-      <DependentUpon>201605072033227_DBInicial.cs</DependentUpon>
+    <Compile Include="Migrations\201605072343002_DBInicial.cs" />
+    <Compile Include="Migrations\201605072343002_DBInicial.Designer.cs">
+      <DependentUpon>201605072343002_DBInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,14 +88,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605072033227_DBInicial.resx">
-      <DependentUpon>201605072033227_DBInicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605072343002_DBInicial.resx">
+      <DependentUpon>201605072343002_DBInicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

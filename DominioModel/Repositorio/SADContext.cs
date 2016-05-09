@@ -186,7 +186,9 @@ namespace DominioModel.Repositorio
             : base("name=SADContext")
         {
             Database.SetInitializer(new SADContextInitializer());
-            Database.Initialize(true);
+
+            if (!Database.Exists())
+                Database.Initialize(true);
         }
 
         public virtual DbSet<Bairro> Bairros { get; set; }
@@ -242,6 +244,7 @@ namespace DominioModel.Repositorio
             modelBuilder.Entity<Endereco>().Property(e => e.Logradouro).HasMaxLength(60);
 
             modelBuilder.Entity<Bairro>().ToTable("Bairros");
+            modelBuilder.Entity<Bairro>().Property(e => e.BairroID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<Bairro>().Property(e => e.Nome).HasMaxLength(50);
 
             modelBuilder.Entity<Cidade>().ToTable("Cidades");
@@ -321,17 +324,17 @@ namespace DominioModel.Repositorio
 
             modelBuilder.Entity<Endereco>()
                 .HasRequired(e => e.Bairro)
-                .WithRequiredPrincipal();
+                .WithMany(e => e.Enderecos);
 
             modelBuilder.Entity<Endereco>()
                 .HasRequired(e => e.Cidade)
-                .WithRequiredPrincipal();
+                .WithMany(e => e.Enderecos);
 
             modelBuilder.Entity<Endereco>()
                 .HasRequired(e => e.UF)
-                .WithRequiredPrincipal();
-                
-           
+                .WithMany(e => e.Enderecos);
+
+
             modelBuilder.Entity<Veiculo>()
                 .Property(e => e.Placa)
                 .IsFixedLength()

@@ -1,24 +1,64 @@
-﻿$(document).ready(function () {
+﻿(function ($) {
+
+    //----- TAB control ------------------------
+
+    var tabAtiva = null;
+
+    $.setTabAtiva = function(tab) {
+        tabAtiva = tab;
+    }
+
+    $.getTabAtiva = function() {
+        return tabAtiva;
+    }
+
+    $.tab = function (selector) {
+       
+        return $(selector, '#' + tabAtiva);
+    }
+
+    //---- Contador -----------------------------
+    var contatado = 0;
+
+    $.getContatorValor = function() {
+        return contatado++;
+    }
+    
+}(jQuery));
+
+$(document).ready(function () {
 
     $('#NovoCliente').on('click', function () {
 
         AtivarPartialView('tabNovoEditarCliente', 'Novo', 'Clientes', function () {
 
-            ConfigurarDadosInvisiveisCliente();
+            $.setTabAtiva('tabNovoEditarCliente');
 
-            ConfigurarTabelaClienteContatos();
+            ConfigurarDadosInvisiveisCliente('tabNovoEditarCliente');
 
-            ConfigurarMascarasCliente();
+            ConfigurarTabelaClienteContatos('tabNovoEditarCliente');
 
+            ConfigurarMascarasCliente('tabNovoEditarCliente');
+
+            $('#menu3 .search input', '#tabNovoEditarCliente').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            AjusteBarraAcoes('menu3', '#tabNovoEditarCliente');
+
+            //set ramo default
             $('#ListaRamosAtividade').val(0).trigger('change');
 
-            $('#btnSalvarCliente').on('click', function (e) {
+            $('#btnSalvarCliente', '#tabNovoEditarCliente').on('click', function (e) {
 
-                getSelectValue('RamoAtividadeID', 'ListaRamosAtividade');
-                getMultSelectValues('Postos', 'ListaPostos');
-                getMultSelectValues('Marcas', 'ListaMarcas');
-                getMultSelectValues('Servicos', 'ListaServicos');
-                getContatos();
+                getSelectValue('RamoAtividadeID', 'ListaRamosAtividade', 'tabNovoEditarCliente');
+                getMultSelectValues('Postos', 'ListaPostos', 'tabNovoEditarCliente');
+                getMultSelectValues('Marcas', 'ListaMarcas', 'tabNovoEditarCliente');
+                getMultSelectValues('Servicos', 'ListaServicos', 'tabNovoEditarCliente');
+                getContatos('tabNovoEditarCliente');
 
                 AtivarSpin();
             });
@@ -31,7 +71,7 @@
                 }
             });
 
-            $('#btnConsultarCEP').on('click', function (e) {
+            $('#btnConsultarCEP', '#tabNovoEditarCliente').on('click', function (e) {
            
                 var $cep = $('input[name="CEP"]');
                 var unmaskedCep = $cep.inputmask('unmaskedvalue');
@@ -45,10 +85,10 @@
                         cep: unmaskedCep,
                         success: function (dados, encontrou) {
                             if (encontrou) {
-                                PreencherEndereco(dados);
+                                PreencherEndereco(dados, 'tabNovoEditarCliente');
                             } else {                              
                                 HabilitarValidacao('tabNovoEditarCliente', 'CEP', 'O CEP não foi encontrado.');
-                                PreencherEndereco(null);
+                                PreencherEndereco(null, 'tabNovoEditarCliente');
                             }
                         },
                         error: function () {
@@ -60,18 +100,17 @@
                     });
                 } else {
                     DesabilitarValidacao('tabNovoEditarCliente', 'CEP');
-                    PreencherEndereco(null);
+                    PreencherEndereco(null, 'tabNovoEditarCliente');
                 }
 
             });
 
             
-            $('input[name="CEP"]', '#tabNovoEditarCliente').on('keyup', function (e) {
+            $('input[name="CEP"]', '#tabNovoEditarCliente').change(function (e) {
 
-                if (e.keyCode === 8) {
                     DesabilitarValidacao('tabNovoEditarCliente', 'CEP');
-                    PreencherEndereco(null);
-                }                       
+                    PreencherEndereco(null, 'tabNovoEditarCliente');
+                                       
             });
             
 
@@ -94,23 +133,120 @@
     });
 });
 
-function PreencherEndereco(dados) {
+function PreencherEndereco(dados, raiz) {
     if ((dados != null) && (dados != undefined)) {
-        $('input[name="Logradouro"]', '#tabNovoEditarCliente').val(dados.logradouro);
-        $('input[name="Bairro"]', '#tabNovoEditarCliente').val(dados.bairro);
-        $('input[name="Cidade"]', '#tabNovoEditarCliente').val(dados.localidade);
-        $('input[name="UF"]', '#tabNovoEditarCliente').val(dados.uf);
+        $('input[name="Logradouro"]', '#' + raiz).val(dados.logradouro);
+        $('input[name="Bairro"]', '#' + raiz).val(dados.bairro);
+        $('input[name="Cidade"]', '#' + raiz).val(dados.localidade);
+        $('input[name="UF"]', '#' + raiz).val(dados.uf);
     } else {
-        $('input[name="Logradouro"]', '#tabNovoEditarCliente').val('');
-        $('input[name="Bairro"]', '#tabNovoEditarCliente').val('');
-        $('input[name="Cidade"]', '#tabNovoEditarCliente').val('');
-        $('input[name="UF"]', '#tabNovoEditarCliente').val('');
+        $('input[name="Logradouro"]', '#' + raiz).val('');
+        $('input[name="Bairro"]', '#' + raiz).val('');
+        $('input[name="Cidade"]', '#' + raiz).val('');
+        $('input[name="UF"]', '#' + raiz).val('');
     }
 }
 
 function AtivarPartialViewListaClientes(onShow) {
 
     AtivarPartialView('tabListaClientes', 'Lista', 'Clientes', function () {
+
+        $('#btnEditarCliente').on('click', function () {
+            var selected = $("#tblClientes").bootstrapTable('getSelections');
+
+            if ((selected === null) || (selected.length === 0))
+                AtivarAlert('warning', 'Selecione um cliente', 'listaClientesAlerta');
+            else
+            {
+                var id = selected[0].ClienteID;
+
+                $('#tabEditarCliente').remove();
+                AtivarPartialView('tabEditarCliente', 'Editar/' + id, 'Clientes', function () {
+
+                    $.setTabAtiva('tabEditarCliente');
+             
+                    ConfigurarDadosInvisiveisCliente('tabEditarCliente');
+
+                    ConfigurarTabelaClienteContatos('tabEditarCliente',  JSON.parse($('input[name="Contatos"]', '#tabEditarCliente').val()));
+
+                    ConfigurarMascarasCliente('tabEditarCliente');
+
+                    $('#menu30 .search input', '#tabEditarCliente').on('keydown', function (e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+
+                    AjusteBarraAcoes('menu30', '#tabEditarCliente');
+
+                    $('#btnSalvarCliente', '#tabEditarCliente').on('click', function (e) {
+
+                        getSelectValue('RamoAtividadeID', 'ListaRamosAtividade', 'tabEditarCliente');
+                        getMultSelectValues('Postos', 'ListaPostos', 'tabEditarCliente');
+                        getMultSelectValues('Marcas', 'ListaMarcas', 'tabEditarCliente');
+                        getMultSelectValues('Servicos', 'ListaServicos', 'tabEditarCliente');
+                        getContatos('tabEditarCliente');
+
+                        AtivarSpin();
+                    });
+
+                    //Não permitir form submit ao preensionar ENTER nos campos
+                    $('input', '#tabEditarCliente').on('keydown', function (e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+
+                    $('#btnConsultarCEP', '#tabEditarCliente').on('click', function (e) {
+
+                        var $cep = $('input[name="CEP"]');
+                        var unmaskedCep = $cep.inputmask('unmaskedvalue');
+
+                        if ((unmaskedCep != null) && (unmaskedCep.length == 8)) {
+
+                            DesabilitarValidacao('tabEditarCliente', 'CEP');
+                            $('#cepload').css('display', 'table-cell');
+
+                            APICEP.Consultar({
+                                cep: unmaskedCep,
+                                success: function (dados, encontrou) {
+                                    if (encontrou) {
+                                        PreencherEndereco(dados, 'tabEditarCliente');
+                                    } else {
+                                        HabilitarValidacao('tabEditarCliente', 'CEP', 'O CEP não foi encontrado.');
+                                        PreencherEndereco(null, 'tabEditarCliente');
+                                    }
+                                },
+                                error: function () {
+                                    AlertaErroInterno("Não foi possível consultar o CEP.");
+                                },
+                                complete: function () {
+                                    $('#cepload').css('display', 'none');
+                                }
+                            });
+                        } else {
+                            DesabilitarValidacao('tabEditarCliente', 'CEP');
+                            PreencherEndereco(null, 'tabEditarCliente');
+                        }
+
+                    });
+
+
+                    $('input[name="CEP"]', '#tabEditarCliente').change( function (e) {
+
+                            DesabilitarValidacao('tabditarCliente', 'CEP');
+                            PreencherEndereco(null, 'tabEditarCliente');
+                    });
+
+                }, function () {
+                    var active = $('#tabEditarCliente li.active a:first-child');
+                    var tab = $(active).attr('href');
+                    $('#tabEditarCliente ' + tab).addClass('in active');
+                });
+            }
+        });
 
         $('#tblClientes').bootstrapTable({
             uniqueId: 'ClienteID',
@@ -204,22 +340,30 @@ function AtivarPartialViewListaClientes(onShow) {
     }, onShow);
 }
 
-function ConfigurarMascarasCliente() {
-    $('input[name="DataNascimento"]', '#tabNovoEditarCliente').inputmask('d/m/y', { placeholder: 'dd/mm/aaaa' });
-    $('input[name="CEP"]', '#tabNovoEditarCliente').inputmask('99.999-999', { removeMaskOnSubmit: true });
-    $('input[name="PlacaVeiculo"]', '#tabNovoEditarCliente').inputmask('AAA-9999', { removeMaskOnSubmit: true });
+function ConfigurarDadosEditCliente() {
+    
+    setDefaultSelect($('input[name="RamoAtividadeID"]', '#tabEditarCliente').val(), $('#RamosAtividades', '#tabEditarCliente'));
+
+    var strServicos = $('input[name="Servicos"]', '#tabEditarCliente').val();
+    setDefaultMultSelect($('input[name="Servicos"]', '#tabEditarCliente'));
 }
 
-function ConfigurarDadosInvisiveisCliente() {
-
-    setDefaultSelect('RamoAtividadeID', 'ListaRamosAtividade');
-    setDefaultMultSelect('Postos', 'ListaPostos');
-    setDefaultMultSelect('Marcas', 'ListaMarcas');
-    setDefaultMultSelect('Servicos', 'ListaServicos');
+function ConfigurarMascarasCliente(raiz) {
+    $('input[name="DataNascimento"]', '#' + raiz).inputmask('d/m/y', { placeholder: 'dd/mm/aaaa' });
+    $('input[name="CEP"]', '#' + raiz).inputmask('99.999-999', { removeMaskOnSubmit: true });
+    $('input[name="PlacaVeiculo"]', '#' + raiz).inputmask('AAA-9999', { removeMaskOnSubmit: true });
 }
 
-function ConfigurarTabelaClienteContatos(contatos) {
-    $('#btnAddContato').on('click', function (e) {
+function ConfigurarDadosInvisiveisCliente(raiz) {
+
+    setDefaultSelect('RamoAtividadeID', 'ListaRamosAtividade', raiz);
+    setDefaultMultSelect('Postos', 'ListaPostos', raiz);
+    setDefaultMultSelect('Marcas', 'ListaMarcas', raiz);
+    setDefaultMultSelect('Servicos', 'ListaServicos', raiz);
+}
+
+function ConfigurarTabelaClienteContatos(raiz, contatos) {
+    $.tab('#btnAddContato').on('click', function (e) {
         e.preventDefault();
 
         AtivarSpin();
@@ -253,20 +397,37 @@ function ConfigurarTabelaClienteContatos(contatos) {
         });
     });
 
-    $('#btnRemoveContato').on('click', function (e) {
+    $.tab('#btnRemoveContato').on('click', function (e) {
         e.preventDefault();
+
+        var selected = $.tab('#tblClienteContatos').bootstrapTable('getSelections');
+
+        if ((selected == null) || (selected.length == 0))
+            AlertaAtencao('Selecione um contato');
+        else
+        {
+            $.tab('#tblClienteContatos').bootstrapTable('remove', { field: 'ContatoID', values: [selected[0].ContatoID] });
+        }
     });
 
-    $('#tblClienteContatos').bootstrapTable({
+    $.tab('#tblClienteContatos').bootstrapTable({
         columns: [{
             radio: true
+        }, {
+            field: 'ContatoID',
+            visible: false
         }, {
             field: 'Nome',
             title: 'Nome'
         }, {
             field: 'Telefone',
-            title: 'Telefone'
+            title: 'Telefone',
+            formatter: function (value) {
+                if (value != null)
+                    return Inputmask.format(value, '(99) 9999[9]-9999');
+            }
         }],
+        data: contatos,
         pagination: true,
         striped: true,
         //toolbar: '#toolbarAbaAvaliados-Gerenciar',
@@ -275,15 +436,6 @@ function ConfigurarTabelaClienteContatos(contatos) {
         pageSize: 10,
         showColumns: false
     });
-
-    $('#menu3 .search input').on('keydown', function (e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    AjusteBarraAcoes('menu3');
 }
 
 function PostContatoSuccess(data) {
@@ -295,7 +447,7 @@ function PostContatoSuccess(data) {
         var _nome = $("#formContato [name='Nome']").val();
         var _telefone = $("#formContato [name='Telefone']").val();
 
-        $('#tblClienteContatos').bootstrapTable('append', [{ Nome: _nome, Telefone: _telefone }]);
+        $.tab('#tblClienteContatos').bootstrapTable('append', [{ ContatoID: $.getContatorValor(), Nome: _nome, Telefone: _telefone }]);
     }
     else if (data.Status === "VALIDACAO") {
         data.Mensagem.forEach(function (val) {
@@ -312,51 +464,54 @@ function PostContatoComplete() {
     DesativarSpin();
 }
 
-function getContatos() {
-    var contatos = $('#tblClienteContatos').bootstrapTable('getData', true);
+function getContatos(raiz) {
+    var contatos = $('#tblClienteContatos', '#' + raiz).bootstrapTable('getData', true);
     $.each(contatos, function (index, value) {
+        value.ClienteID = 0;
         value.Telefone = Inputmask.unmask(value.Telefone, '(99) 9999[9]-9999');
     });
     var json = JSON.stringify(contatos);
-    $('#tabNovoEditarCliente [name="Contatos"]').val(json);
+    $('#' + raiz + ' [name="Contatos"]').val(json);
 }
 
 
 //inputValues deve conter uma lista de valores separador por virgula.
 //Exemplos:   "1,2,6,29"      "Maça,Uva,Abacaxi" 
-function setDefaultMultSelect(inputValues, multSelect) {
-    var strValues = $('#' + inputValues).val();
+function setDefaultMultSelect(inputValues, multSelect, raiz) {
+    var strValues = $('#' + inputValues, '#' + raiz).val();
 
     if (strValues != null) {
         var arrayValues = strValues.split(',');
 
-        $('#' + multSelect).val(arrayValues).trigger('change');
+        $('#' + multSelect, '#' + raiz).val(arrayValues).trigger('change');
     }
 }
 
-function setDefaultSelect(inputValue, select) {
-    var value = $('#' + inputValue).val();
+function setDefaultSelect(inputValue, select, raiz) {
+    var value = $('#' + inputValue, '#' + raiz).val();
 
     if (value != null) {
-        $('#' + select).val(value).trigger('change');
+        $('#' + select, '#' + raiz).val(value).trigger('change');
     }
 }
 
-function getSelectValue(inputSorce, select) {
+function getSelectValue(inputSorce, select, raiz) {
 
-    var arrayValues = $('#' + select).val();
+    var arrayValues = $('#' + select, '#' + raiz).val();
 
     if ((arrayValues != null) && (arrayValues.length != 0)) {
 
-        var value = $('#' + select).val();
+        var value = $('#' + select, '#' + raiz).val();
 
         if (value != null)
-            $('#' + inputSorce).val(value);
+            $('#' + inputSorce, '#' + raiz).val(value);
     }
+    else
+        $('#' + inputSorce, '#' + raiz).val(null);
 }
 
-function getMultSelectValues(inputSorce, multSelect) {
-    var arrayValues = $('#' + multSelect).val();
+function getMultSelectValues(inputSorce, multSelect, raiz) {
+    var arrayValues = $('#' + multSelect, '#' + raiz).val();
 
     if ((arrayValues != null) && (arrayValues.length != 0)) {
 
@@ -368,8 +523,10 @@ function getMultSelectValues(inputSorce, multSelect) {
 
             strValues += value;
         });
-        $('#' + inputSorce).val(strValues);
+        $('#' + inputSorce, '#' + raiz).val(strValues);
     }
+    else
+        $('#' + inputSorce, '#' + raiz).val(null);
 }
 
 function PostClienteSuccess(data, status, xhr) {
@@ -402,3 +559,34 @@ function PostClienteError() {
 function PostClienteComplete() {
     DesativarSpin();
 }
+
+
+function PostClienteEditSuccess(data, status, xhr) {
+
+    DesabilitarTodasValidacoes('tabEditarCliente');
+    DesativarAlert('listaClientesAlerta');
+
+    if (data.Status === 'OK') {
+
+        AtivarPartialViewListaClientes(function () {
+            AtivarAlert('success', data.Mensagem, 'listaClientesAlerta');
+            $(document).remove($('#tabEditarCliente'));
+        });
+
+    } else if (data.Status === 'VALIDACAO') {
+        data.Mensagem.forEach(function (val) {
+            HabilitarValidacao('tabEditarCliente', val.Campo, val.Erro);
+        });
+    } else if (data.Status === 'ERRO') {
+        AlertaErroInterno(data.Mensagem);
+    }
+}
+
+function PostClienteEditError() {
+    AlertaErroInterno();
+}
+
+function PostClienteEditComplete() {
+    DesativarSpin();
+}
+
