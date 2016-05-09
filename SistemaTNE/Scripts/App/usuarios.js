@@ -122,6 +122,10 @@ function AtivarPartialViewListaUsuarios(onShow) {
                     url: '../Usuarios/AlterarSenha',
                     method: 'GET',
                     success: function (partialView) {
+
+                        if (VaParaAutenticacaoSeSignOut(partialView))
+                            return false;
+
                         ModelShow({
                             title: 'Alterar senha',
                             bodyModel: partialView,
@@ -193,14 +197,14 @@ function AtivarPartialViewListaUsuarios(onShow) {
                     success: function (data) {
                         if (data.Status === 'OK') {
 
-                            /*
+                            
                             var id =  getSelectedUsuarioID();
-                            var data = $('#tblUsuarios').bootstrapTable('getRowByUniqueId', id);
-                            var bloq = data.Mensagem.indexOf('bloqueado') >= 0;
-                            data.Bloqueado = bloq ? 'Sim' : 'Não';
-                            $('#tblUsuarios').bootstrapTable('updateByUniqueId', id, data);
-                            */
-                            AtivarAlert('success', data.Mensagem, 'listaUsuariosAlerta');
+                            var usr = $('#tblUsuarios').bootstrapTable('getRowByUniqueId', id);
+     
+                            usr.Bloqueado = data.Mensagem.Bloqueado ? 'Sim' : 'Não';
+                            $('#tblUsuarios').bootstrapTable('updateByUniqueId', { id: id, row: usr });
+                            
+                            AtivarAlert('success', data.Mensagem.Texto, 'listaUsuariosAlerta');
                         } else if (data.Status === 'ERRO') {
                             AlertaErroInterno(data.Mensagem);
                         }

@@ -25,8 +25,9 @@ namespace DominioModel.Repositorio.Concreto
 
         public void AlterarSenha(Usuario usuario)
         {
-            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+            var senha = usuario.Senha;
             context.Entry(usuario).State = EntityState.Unchanged;
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(senha);        
             context.Entry(usuario).Property(u => u.Senha).IsModified = true;
             context.SaveChanges();
         }
@@ -35,7 +36,7 @@ namespace DominioModel.Repositorio.Concreto
         {
             var userAuth = this.Todos()
                 .Where((usr) => 
-                usr.Login.Equals(usuario.Login) && 
+                usr.Login.ToLower().Equals(usuario.Login.ToLower()) && 
                 BCrypt.Net.BCrypt.Verify(usuario.Senha, usr.Senha)
                 ).SingleOrDefault();
 
@@ -55,6 +56,9 @@ namespace DominioModel.Repositorio.Concreto
         {           
             var usuario = RetornarPorID(id);
 
+            if (usuario == null)
+                throw new Exception("Usuário não existe");
+
             if (bloquear && (usuario.Papel == PapelUsuario.Administrador))
             {
                 int adminCount = (from usr in Usuarios
@@ -65,9 +69,7 @@ namespace DominioModel.Repositorio.Concreto
                     throw new Exception("Não é possível bloquear o único usuário do sistema.");
             }
 
-            if (usuario == null)
-                throw new Exception("Usuário não existe");
-
+            context.Entry(usuario).State = EntityState.Unchanged;
             usuario.Bloqueado = bloquear;
             context.Entry(usuario).Property(u => u.Bloqueado).IsModified = true;
             context.SaveChanges();
@@ -84,7 +86,6 @@ namespace DominioModel.Repositorio.Concreto
         public Usuario RetornarPorID(int id)
         {
             var usuario = context.Usuarios.Find(id);
-            usuario.Senha = null;
 
             return usuario;
         }

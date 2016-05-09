@@ -31,7 +31,7 @@ function CarregarPartialView(action, controller, onSuccess, onError, container)
         success: function (partialView, status, xhr) {
 
             if (VaParaAutenticacaoSeSignOut(partialView))
-                return;
+                return false;
 
             $('#' + container).append(partialView);
 
@@ -56,6 +56,9 @@ function VaParaAutenticacaoSeSignOut(html)
 {
     if (html.indexOf('pagina_autenticacao') >= 0) {
         window.location.assign("../Home/Autenticacao");
+        return true;
+    } else if (html.indexOf('acessoNegado') >= 0) {
+        window.location.assign("../Home/AcessoNegado");
         return true;
     }
 

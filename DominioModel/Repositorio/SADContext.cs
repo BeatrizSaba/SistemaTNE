@@ -211,8 +211,9 @@ namespace DominioModel.Repositorio
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
-            modelBuilder.Entity<Usuario>().Property(e => e.Login).HasMaxLength(30);
-            modelBuilder.Entity<Usuario>().Property(e => e.Senha).HasMaxLength(60);
+            modelBuilder.Entity<Usuario>().Property(e => e.Nome).HasMaxLength(20).IsRequired();
+            modelBuilder.Entity<Usuario>().Property(e => e.Login).HasMaxLength(30).IsRequired();
+            modelBuilder.Entity<Usuario>().Property(e => e.Senha).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<Usuario>().Property(e => e.Login)
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UNQ_LOGIN")
                 {
@@ -220,10 +221,10 @@ namespace DominioModel.Repositorio
                 }));
 
             modelBuilder.Entity<Cliente>().ToTable("Clientes");
-            modelBuilder.Entity<Cliente>().Property(e => e.Nome).HasMaxLength(70);
-            modelBuilder.Entity<Cliente>().Property(e => e.Residencia).HasMaxLength(20);
-            modelBuilder.Entity<Cliente>().Property(e => e.DataCriacao).HasColumnType("date");
-            modelBuilder.Entity<Cliente>().Property(e => e.DataModificacao).HasColumnType("date");
+            modelBuilder.Entity<Cliente>().Property(e => e.Nome).HasMaxLength(70).IsRequired();
+            modelBuilder.Entity<Cliente>().Property(e => e.Residencia).HasMaxLength(20).IsRequired();
+            modelBuilder.Entity<Cliente>().Property(e => e.DataCriacao).HasColumnType("date").IsRequired();
+            modelBuilder.Entity<Cliente>().Property(e => e.DataModificacao).HasColumnType("date").IsRequired();
             modelBuilder.Entity<Cliente>().Property(e => e.FormaPagamentoUsada).IsOptional();
             modelBuilder.Entity<Cliente>().Property(e => e.FrequenciaVisitaPosto).IsOptional();
             modelBuilder.Entity<Cliente>().Property(e => e.RamoAtividadeID).IsOptional();
@@ -237,51 +238,60 @@ namespace DominioModel.Repositorio
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             modelBuilder.Entity<RamoAtividade>().ToTable("RamosAtividade");
-            modelBuilder.Entity<RamoAtividade>().Property(e => e.Descricao).HasMaxLength(50);
+            modelBuilder.Entity<RamoAtividade>().Property(e => e.Descricao).HasMaxLength(50).IsRequired();
 
             modelBuilder.Entity<Endereco>().ToTable("Enderecos");
-            modelBuilder.Entity<Endereco>().Property(e => e.CEP).HasMaxLength(8).IsFixedLength();
-            modelBuilder.Entity<Endereco>().Property(e => e.Logradouro).HasMaxLength(60);
+            modelBuilder.Entity<Endereco>().Property(e => e.CEP).HasMaxLength(8).IsFixedLength().IsRequired();
+            modelBuilder.Entity<Endereco>().Property(e => e.Logradouro).HasMaxLength(60).IsRequired();
 
             modelBuilder.Entity<Bairro>().ToTable("Bairros");
             modelBuilder.Entity<Bairro>().Property(e => e.BairroID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<Bairro>().Property(e => e.Nome).HasMaxLength(50);
+            modelBuilder.Entity<Bairro>().Property(e => e.Nome).HasMaxLength(50).IsRequired();
 
             modelBuilder.Entity<Cidade>().ToTable("Cidades");
-            modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasMaxLength(50);
+            modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasMaxLength(50).IsRequired();
 
             modelBuilder.Entity<UF>().ToTable("Estados");
-            modelBuilder.Entity<UF>().Property(e => e.Nome).HasMaxLength(50);
+            modelBuilder.Entity<UF>().Property(e => e.Nome).HasMaxLength(50).IsRequired();
 
             modelBuilder.Entity<Contato>().ToTable("Contatos");
             modelBuilder.Entity<Contato>().Property(e => e.Nome).HasMaxLength(40).IsOptional();
-            modelBuilder.Entity<Contato>().Property(e => e.Telefone).HasMaxLength(14);
+            modelBuilder.Entity<Contato>().Property(e => e.Telefone).HasMaxLength(14).IsRequired();
 
             modelBuilder.Entity<Veiculo>().ToTable("Veiculos");
             modelBuilder.Entity<Veiculo>().Property(e => e.Modelo).HasMaxLength(30).IsOptional();
             modelBuilder.Entity<Veiculo>().Property(e => e.Placa).HasMaxLength(7).IsFixedLength().IsOptional() ;
 
             modelBuilder.Entity<Marca>().ToTable("Marcas");
-            modelBuilder.Entity<Marca>().Property(e => e.Nome).HasMaxLength(40);
+            modelBuilder.Entity<Marca>().Property(e => e.Nome).HasMaxLength(40).IsRequired();
 
             modelBuilder.Entity<Posto>().ToTable("Postos");
-            modelBuilder.Entity<Posto>().Property(e => e.Nome).HasMaxLength(50);
+            modelBuilder.Entity<Posto>().Property(e => e.Nome).HasMaxLength(50).IsRequired();
 
             modelBuilder.Entity<Servico>().ToTable("servicos");
-            modelBuilder.Entity<Servico>().Property(e => e.Descricao).HasMaxLength(40);
+            modelBuilder.Entity<Servico>().Property(e => e.Descricao).HasMaxLength(40).IsRequired();
 
 
             modelBuilder.Entity<Bairro>()
-                .Property(e => e.Nome).HasColumnAnnotation("index",
+                .Property(e => e.Nome)
+                .HasMaxLength(60)
+                .IsRequired()
+                .HasColumnAnnotation("index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_BAIRRO_NOME") { IsUnique = true }));
 
 
-            modelBuilder.Entity<Cidade>().Property(e => e.Nome).HasColumnAnnotation("Index",
+            modelBuilder.Entity<Cidade>().Property(e => e.Nome)
+                .HasMaxLength(60)
+                .IsRequired()
+                .HasColumnAnnotation("Index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_CIDADE_NOME") { IsUnique = true }));
 
-            modelBuilder.Entity<UF>().Property(e => e.Nome).HasColumnAnnotation("Index",
+            modelBuilder.Entity<UF>().Property(e => e.Nome)
+                .HasMaxLength(60)
+                .IsRequired()
+                .HasColumnAnnotation("Index",
                 new IndexAnnotation(
                     new IndexAttribute("UNQ_UF_NOME") { IsUnique = true }));
 

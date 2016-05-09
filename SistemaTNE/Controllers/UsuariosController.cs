@@ -149,7 +149,8 @@ namespace SistemaTNE.Controllers
                             msg = "Usuario desbloqueado.";
 
 
-                        return Json(RespostaRequisicao.SimpleText(msg));
+                        return Json(RespostaRequisicao.Create(RespostaRequisicao.STATUS_OK, 
+                            new { Bloqueado = usuario.Bloqueado, Texto = msg }));
                     }
                     else
                     {
@@ -161,7 +162,7 @@ namespace SistemaTNE.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
-            catch
+            catch (Exception e)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }

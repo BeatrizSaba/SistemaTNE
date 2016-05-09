@@ -21,6 +21,15 @@ namespace SistemaTNE.Controllers.Mensagem
         {
         }
 
+        public static RespostaRequisicao Create(string status, object msg)
+        {
+            return new RespostaRequisicao()
+            {
+                Status = status,
+                Mensagem = msg
+            };
+        }
+
 
         public static RespostaRequisicao FromModelState(ModelStateDictionary modelState)
         {

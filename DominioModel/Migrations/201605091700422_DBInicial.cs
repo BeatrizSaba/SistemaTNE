@@ -14,7 +14,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         BairroID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50,
+                        Nome = c.String(nullable: false, maxLength: 60,
                             annotations: new Dictionary<string, AnnotationValues>
                             {
                                 { 
@@ -30,8 +30,8 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         EnderecoID = c.Int(nullable: false, identity: true),
-                        CEP = c.String(maxLength: 8, fixedLength: true, unicode: false),
-                        Logradouro = c.String(maxLength: 60),
+                        CEP = c.String(nullable: false, maxLength: 8, fixedLength: true, unicode: false),
+                        Logradouro = c.String(nullable: false, maxLength: 60),
                         BairroID = c.Int(nullable: false),
                         CidadeID = c.Int(nullable: false),
                         UFID = c.Int(nullable: false),
@@ -50,7 +50,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         CidadeID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50),
+                        Nome = c.String(nullable: false, maxLength: 60),
                     })
                 .PrimaryKey(t => t.CidadeID)
                 .Index(t => t.Nome, unique: true, name: "UNQ_CIDADE_NOME");
@@ -62,11 +62,11 @@ namespace DominioModel.Migrations
                         ClienteID = c.Int(nullable: false, identity: true),
                         DataCriacao = c.DateTime(nullable: false, storeType: "date"),
                         DataModificacao = c.DateTime(nullable: false, storeType: "date"),
-                        Nome = c.String(maxLength: 70),
+                        Nome = c.String(nullable: false, maxLength: 70),
                         DataNascimento = c.DateTime(nullable: false),
                         TipoPessoa = c.Int(nullable: false),
                         Estado = c.Int(nullable: false),
-                        Residencia = c.String(maxLength: 20),
+                        Residencia = c.String(nullable: false, maxLength: 20),
                         EnderecoID = c.Int(nullable: false),
                         FrequenciaVisitaPosto = c.Int(),
                         FormaPagamentoUsada = c.Int(),
@@ -85,7 +85,7 @@ namespace DominioModel.Migrations
                         ContatoID = c.Int(nullable: false, identity: true),
                         ClienteID = c.Int(nullable: false),
                         Nome = c.String(maxLength: 40),
-                        Telefone = c.String(maxLength: 14),
+                        Telefone = c.String(nullable: false, maxLength: 14),
                     })
                 .PrimaryKey(t => t.ContatoID)
                 .ForeignKey("dbo.Clientes", t => t.ClienteID)
@@ -96,7 +96,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         MarcaID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 40),
+                        Nome = c.String(nullable: false, maxLength: 40),
                     })
                 .PrimaryKey(t => t.MarcaID);
             
@@ -119,7 +119,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         PostoID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50),
+                        Nome = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.PostoID);
             
@@ -128,7 +128,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         RamoAtividadeID = c.Int(nullable: false, identity: true),
-                        Descricao = c.String(maxLength: 50),
+                        Descricao = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.RamoAtividadeID);
             
@@ -137,7 +137,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         ServicoID = c.Int(nullable: false, identity: true),
-                        Descricao = c.String(maxLength: 40),
+                        Descricao = c.String(nullable: false, maxLength: 40),
                     })
                 .PrimaryKey(t => t.ServicoID);
             
@@ -159,7 +159,7 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         UFID = c.Int(nullable: false, identity: true),
-                        Nome = c.String(maxLength: 50),
+                        Nome = c.String(nullable: false, maxLength: 60),
                     })
                 .PrimaryKey(t => t.UFID)
                 .Index(t => t.Nome, unique: true, name: "UNQ_UF_NOME");
@@ -169,9 +169,9 @@ namespace DominioModel.Migrations
                 c => new
                     {
                         UsuarioID = c.Int(nullable: false, identity: true),
-                        Login = c.String(maxLength: 30),
-                        Senha = c.String(maxLength: 60),
-                        Nome = c.String(),
+                        Login = c.String(nullable: false, maxLength: 30),
+                        Senha = c.String(nullable: false, maxLength: 60),
+                        Nome = c.String(nullable: false, maxLength: 20),
                         Papel = c.Int(nullable: false),
                         Bloqueado = c.Boolean(nullable: false),
                     })

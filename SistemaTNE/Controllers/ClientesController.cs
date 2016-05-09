@@ -75,7 +75,7 @@ namespace SistemaTNE.Controllers
 
                 if (!(Enum.GetValues(typeof(TipoPessoa)) as TipoPessoa[]).Contains(model.TipoPessoa))
                 {
-                    if (!ModelState.ContainsKey("TipoPessoa"))
+                    if (ModelState["TipoPessoa"].Errors.Count == 0)
                         ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de pessoa");
                 }
 
@@ -148,7 +148,7 @@ namespace SistemaTNE.Controllers
                 if (ModelState.IsValid)
                 {
                     clientRepo.Alterar(model.Parse(context));
-                    return Json(RespostaRequisicao.SimpleText("Alterações realizas com sucesso."));
+                    return Json(RespostaRequisicao.SimpleText("Alterações realizadas com sucesso."));
                 }
                 else
                 {

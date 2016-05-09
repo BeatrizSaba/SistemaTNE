@@ -135,6 +135,10 @@ $(document).ready(function () {
 
 function PreencherEndereco(dados, raiz) {
     if ((dados != null) && (dados != undefined)) {
+        DesabilitarValidacao(raiz, 'Logradouro');
+        DesabilitarValidacao(raiz, 'Bairro');
+        DesabilitarValidacao(raiz, 'Cidade');
+        DesabilitarValidacao(raiz, 'UF');
         $('input[name="Logradouro"]', '#' + raiz).val(dados.logradouro);
         $('input[name="Bairro"]', '#' + raiz).val(dados.bairro);
         $('input[name="Cidade"]', '#' + raiz).val(dados.localidade);
@@ -307,7 +311,7 @@ function AtivarPartialViewListaClientes(onShow) {
                 title: 'Ramo de atividade'
             }, {
                 field: 'Estado',
-                title: 'Situação atual'
+                title: 'Estado'
             }, {
                 field: 'ModeloVeiculo',
                 title: 'Modelo de veiculo'
@@ -408,7 +412,12 @@ function ConfigurarTabelaClienteContatos(raiz, contatos) {
         $.ajax({
             url: '../Clientes/Contato',
             success: function (partialView) {
-                window.modelContato
+
+                //window.modelContato
+
+                if (VaParaAutenticacaoSeSignOut(partialView))
+                    return false;
+
                 ModelShow({
                     bodyModel: partialView,
                     title: 'Contato',
@@ -504,7 +513,6 @@ function PostContatoComplete() {
 function getContatos(raiz) {
     var contatos = $('#tblClienteContatos', '#' + raiz).bootstrapTable('getData', true);
     $.each(contatos, function (index, value) {
-        value.ClienteID = 0;
         value.Telefone = Inputmask.unmask(value.Telefone, '(99) 9999[9]-9999');
     });
     var json = JSON.stringify(contatos);
@@ -527,9 +535,11 @@ function setDefaultMultSelect(inputValues, multSelect, raiz) {
 function setDefaultSelect(inputValue, select, raiz) {
     var value = $('#' + inputValue, '#' + raiz).val();
 
-    if (value != null) {
+    if ((value != null) && (value != "")) {
         $('#' + select, '#' + raiz).val(value).trigger('change');
     }
+    else
+        $('#' + select, '#' + raiz).val(0).trigger('change');
 }
 
 function getSelectValue(inputSorce, select, raiz) {
