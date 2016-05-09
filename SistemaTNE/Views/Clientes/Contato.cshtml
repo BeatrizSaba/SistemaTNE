@@ -1,6 +1,6 @@
 ﻿@model SistemaTNE.Models.ContatoModel
 
-@using (Ajax.BeginForm("Contato", "Clientes", new AjaxOptions
+@using (Ajax.BeginForm("Contato", "Clientes", null, new AjaxOptions
 {
     OnSuccess = "PostContatoSuccess",
     OnFailure = "PostContatoError",

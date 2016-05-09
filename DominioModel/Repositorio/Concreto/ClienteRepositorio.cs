@@ -185,11 +185,28 @@ namespace DominioModel.Repositorio.Concreto
                 );
         }
 
-        public void MudarEstado(int id, MudancaEstadoCliente estado)
+        public void MudarEstado(int id, EstadoCliente estado, string observacao)
         {
             var cliente = RetornarPorID(id);
-            cliente.MudancasEstado.Add(estado);
-            context.SaveChanges();
+
+            if (cliente.Estado != estado)
+            {
+                cliente.Estado = estado;
+                context.Entry(cliente).Property(e => e.Estado).IsModified = true;
+
+
+                cliente.MudancasEstado.Add(new MudancaEstadoCliente()
+                {
+                    ClienteID = id,
+                    EstadoAnterior = cliente.Estado,
+                    EstadoNovo = estado,
+                    Observacao = observacao,
+                    DataModificacao = DateTime.Now
+
+                });               
+
+                context.SaveChanges();
+            }
         }
 
         public Cliente RetornarPorID(int id)

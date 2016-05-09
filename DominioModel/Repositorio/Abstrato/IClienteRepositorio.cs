@@ -16,7 +16,7 @@ namespace DominioModel.Repositorio.Abstrato
 
         void Alterar(Cliente cliente);
 
-        void MudarEstado(int id, MudancaEstadoCliente estado);
+        void MudarEstado(int id, EstadoCliente estado, string observacao);
 
 
         Cliente RetornarPorID(int id);

@@ -248,6 +248,43 @@ function AtivarPartialViewListaClientes(onShow) {
             }
         });
 
+        $('#btnMudarEstadoCliente').on('click', function () {
+
+            var selected = $("#tblClientes").bootstrapTable('getSelections');
+
+            if ((selected === null) || (selected.length === 0))
+                AtivarAlert('warning', 'Selecione um cliente', 'listaClientesAlerta');
+            else {
+                var id = selected[0].ClienteID;
+
+                AtivarSpin();
+
+                $.ajax({
+                    url: '../Clientes/MudancaEstado/' + id,
+                    success: function (partialView) {
+
+                        if (VaParaAutenticacaoSeSignOut(partialView))
+                            return false;
+
+                        ModelShow({
+                            bodyModel: partialView,
+                            title: 'Mudança de estado',
+                            onOK: function (e) {
+                                AtivarSpin();
+                                $('#formMudancaEstado').submit();
+                            }
+                        });
+                    },
+                    error: function () {
+                        AlertaErroInterno();
+                    },
+                    complete: function () {
+                        DesativarSpin();
+                    }
+                });
+            }
+        });
+
         $('#tblClientes').bootstrapTable({
             uniqueId: 'ClienteID',
             columns: [{
@@ -590,3 +627,31 @@ function PostClienteEditComplete() {
     DesativarSpin();
 }
 
+
+function PostMudancaEstadoSuccess(data) {
+
+    DesabilitarTodasValidacoes('containerClienteMudancaEstado');
+
+    if (data.Status === 'OK') {
+
+        $('#btnModalCancel').click();
+        AtivarAlert('success', data.Mensagem, 'listaClientesAlerta');
+
+    } else if (data.Status === 'VALIDACAO') {
+
+        data.Mensagem.forEach(function (val) {
+            HabilitarValidacao('containerClienteMudancaEstado', val.Campo, val.Erro);
+        });
+
+    } else if (data.Status === 'ERRO') {
+        AlertaErroInterno(data.Mensagem);
+    }
+}
+
+function PostMudancaEstadoError() {
+    AlertaErroInterno();
+}
+
+function PostMudancaEstadoComplete() {
+    DesativarSpin();
+}

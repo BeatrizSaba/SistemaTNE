@@ -182,6 +182,7 @@
     <Compile Include="Models\AltSenhaUsuarioModel.cs" />
     <Compile Include="Models\AutenticacaoModel.cs" />
     <Compile Include="Models\ClienteEditModel.cs" />
+    <Compile Include="Models\ClienteEstadoModel.cs" />
     <Compile Include="Models\ClienteModal.cs" />
     <Compile Include="Models\ClienteView.cs" />
     <Compile Include="Models\ContatoModel.cs" />
@@ -366,6 +367,7 @@
     <Content Include="Views\Clientes\Novo.cshtml" />
     <Content Include="Views\Clientes\Contato.cshtml" />
     <Content Include="Views\Clientes\Editar.cshtml" />
+    <Content Include="Views\Clientes\MudancaEstado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

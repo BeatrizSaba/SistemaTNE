@@ -28,14 +28,6 @@ namespace SistemaTNE.Controllers
             clientRepo = new ClienteRepositorio(context);
         }
 
-        // GET: Cliente
-        /*
-        [CustomAuthorize(Roles = "Administrador,Gestor,Frentista")]
-        public ActionResult NovoEditar()
-        {
-            return PartialView();
-        }
-        */
 
         [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Lista()
@@ -43,8 +35,8 @@ namespace SistemaTNE.Controllers
             return PartialView();
         }
 
-        [CustomAuthorize(Roles = "Administrador,Gestor")]
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Pesquisar()
         {
             try
@@ -59,15 +51,23 @@ namespace SistemaTNE.Controllers
             }
         }
 
-
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Novo()
         {
-            CriarSelects();
+            try
+            {
+                CriarSelects();
 
-            return PartialView();
+                return PartialView();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Novo(ClienteModel model)
         {
             try
@@ -103,55 +103,73 @@ namespace SistemaTNE.Controllers
         }
 
 
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Editar(int? id)
         {
-            if (id.HasValue)
+            try
             {
-                var cliente = clientRepo.RetornarPorID(id.GetValueOrDefault());
-
-                if (cliente != null)
+                if (id.HasValue)
                 {
-                    CriarSelects();
-                    return PartialView(ClienteEditModel.From(cliente));
+                    var cliente = clientRepo.RetornarPorID(id.GetValueOrDefault());
+
+                    if (cliente != null)
+                    {
+                        CriarSelects();
+                        return PartialView(ClienteEditModel.From(cliente));
+                    }
+                    else
+                    {
+                        return Json(RespostaRequisicao.SimpleError("Cliente não encontrado."));
+                    }
                 }
                 else
                 {
-                    return Json(RespostaRequisicao.SimpleError("Cliente não encontrado."));
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
-            else
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Editar(ClienteEditModel model)
         {
+            try
+            {
+                if (!(Enum.GetValues(typeof(TipoPessoa)) as TipoPessoa[]).Contains(model.TipoPessoa))
+                {
+                    if (!ModelState.ContainsKey("TipoPessoa"))
+                        ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de pessoa");
+                }
 
-            if (!(Enum.GetValues(typeof(TipoPessoa)) as TipoPessoa[]).Contains(model.TipoPessoa))
-            {
-                if (!ModelState.ContainsKey("TipoPessoa"))
-                    ModelState.AddModelError("TipoPessoa", "Selecione um valor para o campo Tipo de pessoa");
+                if (ModelState.IsValid)
+                {
+                    clientRepo.Alterar(model.Parse(context));
+                    return Json(RespostaRequisicao.SimpleText("Alterações realizas com sucesso."));
+                }
+                else
+                {
+                    ModelState.AddModelError("Summary", "Corriga os erros abaixo antes de salvar.");
+                    return Json(RespostaRequisicao.FromModelState(ModelState));
+                }
             }
-
-            if (ModelState.IsValid)
+            catch
             {
-                clientRepo.Alterar(model.Parse(context));
-                return Json(RespostaRequisicao.SimpleText("Alterações realizas com sucesso."));
-            }
-            else
-            {
-                ModelState.AddModelError("Summary", "Corriga os erros abaixo antes de salvar.");
-                return Json(RespostaRequisicao.FromModelState(ModelState));
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Contato()
         {
             return PartialView();
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
         public ActionResult Contato(ContatoModel model)
         {
             if (ModelState.IsValid)
@@ -160,6 +178,72 @@ namespace SistemaTNE.Controllers
             }
             else
                 return Json(RespostaRequisicao.FromModelState(ModelState));
+        }
+
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
+        public ActionResult MudancaEstado(int? id)
+        {
+            try
+            {
+                if (id.HasValue)
+                {
+                    var cliente = clientRepo.RetornarPorID(id.GetValueOrDefault());
+
+                    if (cliente != null)
+                    {
+                        var model = new ClienteEstadoModel()
+                        {
+                            ClienteID = cliente.ClienteID,
+                            Estado = cliente.Estado
+                        };
+
+                        return PartialView(model);
+                    }
+                    else
+                        return Json(RespostaRequisicao.SimpleError("Cliente não encontrado"));
+                }
+                else
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [CustomAuthorize(Roles = "Administrador,Gestor")]
+        public ActionResult MudancaEstado(ClienteEstadoModel model)
+        {
+            try
+            {
+                if ((model.Estado == EstadoCliente.ExCliente) && (String.IsNullOrEmpty(model.Observacao)))
+                {
+                    ModelState.AddModelError("Observacao", "Deve-se informar o motivo pelo qual o cliente se tornou um Ex-Cliente");
+                }
+
+                var cliente = clientRepo.RetornarPorID(model.ClienteID);
+
+                if (cliente.Estado == model.Estado)
+                {
+                    ModelState.AddModelError("Estado", "Este já é o estado atual do cliente");
+                }
+
+                if (ModelState.IsValid)
+                {                  
+                    clientRepo.MudarEstado(model.ClienteID, model.Estado, model.Observacao);
+
+                    return Json(RespostaRequisicao.SimpleText("Estado do cliente alterado com suceso"));
+                }
+                else
+                {
+                    return Json(RespostaRequisicao.FromModelState(ModelState));
+                }
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         private void CriarSelects()
