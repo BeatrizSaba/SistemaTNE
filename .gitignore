@@ -58,3 +58,7 @@ Temporary Items
 /SistemaTNE/bin
 /packages/BCrypt-Official.0.1.109
 /DominioModel/LICENSE.txt
+/DominioModel/obj/Release
+/DominioUnitTest/obj/Release
+/SistemaTNE/obj/Release/Package/PackageTmp/bin/roslyn
+/SistemaTNE/obj/Release/Package/PackageTmp/bin

@@ -21,8 +21,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    @Styles.Render("~/Content/css");
-    @Styles.Render("~/bundles/estilos_dependentes");   
+    @Styles.Render("~/Content/_bootstrap", "~/Content/css/_app"); 
 </head>
 <body style="background: white;">
     <div id="wrapper">
@@ -143,7 +142,7 @@
             }
              <!-- /.navbar-collapse -->
         </nav>
-        <div id="page-wrapper" class="tab-content" style="height:800px; margin-top:-20px">
+        <div id="page-wrapper" class="tab-content" style="height:800px;">
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -168,11 +167,7 @@
         </div>
     </div>
 
-
-    @Scripts.Render("~/bundles/jquery");
-    @Scripts.Render("~/bundles/jqueryval");
-    @Scripts.Render("~/bundles/bootstrap");
-    @Scripts.Render("~/bundles/scripts_dependentes");
+    @Scripts.Render("~/Scripts/_plugins", "~/Scripts/App/_js");
 </body>
 </html>
 

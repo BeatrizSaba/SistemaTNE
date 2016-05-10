@@ -93,5 +93,12 @@ namespace SistemaTNE.Controllers
         {
             return View();
         }
+
+
+        [AllowAnonymous]
+        public ActionResult Erro()
+        {
+            return View();
+        }
     }
 }
