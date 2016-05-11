@@ -110,7 +110,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2016 20:26:45</publishTime>
     </File>
     <File Include="bin/SistemaTNE.dll">
-      <publishTime>05/10/2016 18:04:37</publishTime>
+      <publishTime>05/10/2016 19:37:31</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>04/24/2016 20:26:44</publishTime>
@@ -671,7 +671,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/09/2016 14:29:50</publishTime>
     </File>
     <File Include="Scripts/App/sistema.js">
-      <publishTime>04/05/2016 17:29:11</publishTime>
+      <publishTime>05/04/2016 17:29:11</publishTime>
     </File>
     <File Include="Scripts/App/usuarios.js">
       <publishTime>05/09/2016 14:23:32</publishTime>
@@ -776,22 +776,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2016 15:22:55</publishTime>
     </File>
     <File Include="Views/Clientes/Relatorio.cshtml">
-      <publishTime>02/05/2016 14:12:31</publishTime>
+      <publishTime>05/02/2016 14:12:31</publishTime>
     </File>
     <File Include="Views/Ferramentas/ImportarDados.cshtml">
-      <publishTime>02/05/2016 10:18:17</publishTime>
+      <publishTime>05/02/2016 10:18:17</publishTime>
     </File>
     <File Include="Views/Home/AcessoNegado.cshtml">
-      <publishTime>05/09/2016 14:31:14</publishTime>
+      <publishTime>05/10/2016 19:29:27</publishTime>
     </File>
     <File Include="Views/Home/Autenticacao.cshtml">
-      <publishTime>04/30/2016 15:58:42</publishTime>
+      <publishTime>05/10/2016 19:27:29</publishTime>
+    </File>
+    <File Include="Views/Home/Erro.cshtml">
+      <publishTime>05/10/2016 19:18:57</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>05/10/2016 18:03:14</publishTime>
     </File>
     <File Include="Views/OLAP/Consulta.cshtml">
-      <publishTime>02/05/2016 14:13:49</publishTime>
+      <publishTime>05/02/2016 14:13:49</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAdmin.cshtml">
       <publishTime>04/24/2016 22:28:42</publishTime>
@@ -800,13 +803,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2016 00:00:06</publishTime>
     </File>
     <File Include="Views/Usuarios/AlterarSenha.cshtml">
-      <publishTime>02/05/2016 14:00:39</publishTime>
+      <publishTime>05/02/2016 14:00:39</publishTime>
     </File>
     <File Include="Views/Usuarios/Lista.cshtml">
-      <publishTime>02/05/2016 12:56:14</publishTime>
+      <publishTime>05/02/2016 12:56:14</publishTime>
     </File>
     <File Include="Views/Usuarios/Novo.cshtml">
-      <publishTime>03/05/2016 17:35:04</publishTime>
+      <publishTime>05/03/2016 17:35:04</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/24/2016 20:26:50</publishTime>
@@ -815,7 +818,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2016 20:26:49</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/10/2016 18:04:57</publishTime>
+      <publishTime>05/10/2016 20:23:55</publishTime>
     </File>
   </ItemGroup>
 </Project>

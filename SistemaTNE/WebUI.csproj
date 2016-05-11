@@ -239,6 +239,7 @@
     <Content Include="Content\CSS\select2.min.css" />
     <Content Include="Content\CSS\waitMe.css" />
     <Content Include="Content\CSS\waitMe.min.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Images\1%402x.jpg" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\2%402x.jpg" />
@@ -378,6 +379,9 @@
     <Content Include="Content\assets\font-awesome\scss\_rotated-flipped.scss" />
     <Content Include="Content\assets\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\assets\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Desktop.pubxml" />
     <None Include="Properties\PublishProfiles\HostBuddy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -443,6 +447,9 @@
       <Project>{46C7A07C-5599-410A-A928-1FF4723BE0AD}</Project>
       <Name>DominioModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
